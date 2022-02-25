@@ -1,0 +1,28 @@
+Test Plan will cover two aspects:
+ 
+The robustness tests aim to break the program.
+The expected code functionality ensures the program works correctly. This includes valid and boundary tests.
+ 
+----------------------------------------------------------- 
+ 
+1. Argument testing - Program should receive the correct inputs. 
+   I will attempt to break the program as potential bugs will prevent subsequent errors in the rest of the code.
+   Examples of boundary values include unexpected file types, name and paths. 
+
+2. Reading file testing - Program should read the values of the file correctly. 
+   A wide range of boundary data will need to be tested to ensure that the program will work with every valid pgm file.
+   Example of boundary data are Pgm files with many/no comments and unexpected spacing.
+
+3. Storing values testing - Program should store read values correctly.
+   Unexpected and boundary data will need to be tested to ensure that all possible data inputs are checked. 
+   Examples of boundary data include the minimum and maximum color values of pgm files.
+ 
+4. Writing file testing - Program should write files correctly. 
+   Valid and boundary data will need to be tested to ensure the program outputs the correct file/result every time.
+   Examples of boudary data include writing very large pgm Files. 
+ 
+5. Error checking testing - Program should display the correct error and run the appropriate cleanup command. 
+   A wide range of unexpected, invalid and boundary data will need to tested to ensure that there are no unexpected errors. 
+   Combination of all the above testing along with making sure that memory is freed appropriately as these bugs are hard to detect.
+ 
+-----------------------------------------------------------
