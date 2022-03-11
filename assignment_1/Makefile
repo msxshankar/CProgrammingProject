@@ -1,4 +1,3 @@
-#  
 # COMP 1921 Programming Project                 
 #
 # Assignement 1
@@ -11,18 +10,43 @@
 
  
 # Compiler and compiler flags 
-CC=gcc
+CC = gcc
 CCFLAGS = -g -std=c99 -Wall
+
+# Set of subordinate routines
+MODULES = pgmError.o
+
+# Set of main routines
+MAIN= pgmEcho.o
+
+# Set of executables
+TARGETS = pgmEcho
  
+
 # Compiles all files 
-all: pgmEcho 
- 
-# Compiles pgmEcho 
-pgmEcho:	pgmEcho.c pgmMacro.h
-	${CC} ${CCFLAGS} -o pgmEcho pgmEcho.c
- 
- 
+all:    ${TARGETS}	
+
 # Removes all object files (.o), executables and temporary files
 clean:
-	rm -f pgmEcho
+	rm -f ${TARGETS} ${MAIN} ${MODULES} *.o
+
+
+# Links object files for pgmEcho
+pgmEcho: 	pgmEcho.o ${MODULES}
+	${CC} ${CCFLAGS} -o $@ pgmEcho.o ${MODULES}
+
+
+# dependencies
+depend: 
+	makedepend -Y *.c
+
+# rules
+.SUFFIXES: .o .c
+.c.o:
+	${CC} ${CCFLAGS} -c -o $*.o $*.c
+
+# program dependencies
+pgmEcho.o: pgmImage.h pgmError.h
+pgmErrors.o: pgmErrors.h 
+ 
  

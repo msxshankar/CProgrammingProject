@@ -1,1 +1,8 @@
-*.o
+assignment-1/*.o
+assignment-1/pgmEcho
+assignment-1/pgmComp
+assignment-1/pgma2b
+assignment-1/pgmb2a
+assignment-1/pgmReduce
+assignment-1/pgmTile
+assignment-1/pgmAssemble
