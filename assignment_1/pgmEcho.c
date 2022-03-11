@@ -33,10 +33,13 @@ int main (int argc, char **argv) {
 	 * check for correct number of arguments
 	 * prints correct error message
 	 */
-	if (argc != 3) {
+	if (argc == 1) {
 		noArgumentCount(argv);
 	}
-	
+
+	else if (argc != 3) {
+		badArgumentCount();
+	}
 
 }
 
