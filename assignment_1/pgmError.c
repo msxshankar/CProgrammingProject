@@ -52,6 +52,6 @@ int badArgumentCount () {
 	 */
 	printf("ERROR: Bad Argument Count\n");
 
-	return EXIT_WRONG_ARG_COUNT;
+	return 1;
 }
 

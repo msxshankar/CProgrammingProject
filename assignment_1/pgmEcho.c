@@ -34,11 +34,11 @@ int main (int argc, char **argv) {
 	 * prints correct error message
 	 */
 	if (argc == 1) {
-		noArgumentCount(argv);
+		return(noArgumentCount(argv));
 	}
 
 	else if (argc != 3) {
-		badArgumentCount();
+		return(badArgumentCount());
 	}
 
 }
