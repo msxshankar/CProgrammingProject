@@ -10,7 +10,7 @@
  * Struct containing values for the pgmImage
  */
 
-typedef struct pgm_image {
+struct pgm_image {
 
 	/*
 	 * magic number
@@ -36,4 +36,4 @@ typedef struct pgm_image {
 	 * pointer to raw image data
 	 */
 	unsigned char *imageData;
-} pgmImage;
+};

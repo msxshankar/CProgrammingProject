@@ -14,7 +14,8 @@
 #include <stdlib.h>
 
 
-/* pgm header files
+/* 
+ * pgm header files
  */
 #include "pgmImage.h"
 #include "pgmError.h"
@@ -30,15 +31,25 @@
 
 int main (int argc, char **argv) {
 	/*
-	 * check for correct number of arguments
-	 * prints correct error message
+	 * check if no arguments are passed
+	 * return value and prints correct error message
+	 * using pgmError.c and .h
 	 */
 	if (argc == 1) {
 		return(noArgumentCount(argv));
 	}
 
+	/*
+	 * checks if wrong number of arguments are passed
+	 * returns value and prints correct error message
+	 * using pgmError.c and .h
+	 */
 	else if (argc != 3) {
 		return(badArgumentCount());
+	}
+	
+	else {
+		printf("open file");
 	}
 
 }

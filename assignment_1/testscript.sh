@@ -22,8 +22,12 @@ echo $var
 
 # automate checking outputs
 var=$(./pgmEcho)
-test $? -eq 0 && echo "Correct return value" || echo "Incorrect return value"
-test "$var" = "Usage: ./pgmEcho inputImage.pgm outputImage.pgm" && echo "Correct output string" || echo "Incorrect output string"
+
+# if return value equals 0
+test $? -eq 0 && echo "CORRECT return value" || echo "INCORRECT return value"
+
+# if output equals required string
+test "$var" = "Usage: ./pgmEcho inputImage.pgm outputImage.pgm" && echo "CORRECT output string" || echo "INCORRECT output string"
 
 
 # incorrect number of arguments
@@ -36,6 +40,6 @@ echo $var
 
 # automate checking outputs
 var=$(./pgmEcho inputImage.pgm outputImage.pgm extraImage.pgm)
-test $? -eq 1 && echo "Correct return value" || echo "Incorrect return value"
-test "$var" = "ERROR: Bad Argument Count" && echo "Correct output string" || echo "Incorrect output string"
+test $? -eq 1 && echo "CORRECT return value" || echo "INCORRECT return value"
+test "$var" = "ERROR: Bad Argument Count" && echo "CORRECT output string" || echo "INCORRECT output string"
 
