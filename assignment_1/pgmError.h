@@ -4,5 +4,4 @@
  * Defining functions
  */
 
-int noArgumentCount(char **argv);
-int badArgumentCount();
+int badFileName (char **argv);

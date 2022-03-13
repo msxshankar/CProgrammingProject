@@ -16,7 +16,7 @@
  */
 #define EXIT_NO_ERRORS 0
 #define EXIT_WRONG_ARG_COUNT 1
-#define EXIT_BAD_INPUT_FILE
+#define EXIT_BAD_INPUT_FILE 2
 #define EXIT_BAD_OUTPUT_FILE
 
 #define MAGIC_NUMBER_RAW_PGM 0x3550
@@ -30,28 +30,7 @@
  * Functions for returning error codes
  ************************************/
 
-/*
- * No arguments
- */
-int noArgumentCount (char **argv) {
-	/*
-	 * prints error message and returns value
-	 */
-	printf("Usage: %s inputImage.pgm outputImage.pgm\n", argv[0]);
-
-	return EXIT_NO_ERRORS;
+int badFileName(char **argv) {
+	printf("ERROR: Bad File Name %s\n", argv[1]);
+	return EXIT_BAD_INPUT_FILE;
 }
-
-
-/*
- * Wrong number of arguments
- */
-int badArgumentCount () {
-	/*
-	 * prints error message and returns value
-	 */
-	printf("ERROR: Bad Argument Count\n");
-
-	return 1;
-}
-

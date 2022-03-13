@@ -3,7 +3,6 @@
 /*
  * Due 18/03/22
  * Mayur Shankar
- *
  */
 
 
@@ -17,26 +16,43 @@
 /* 
  * pgm header files
  */
-#include "pgmImage.h"
+#include "pgmEcho.h"
+#include "pgmArgument.h"
 #include "pgmError.h"
+#include "pgmImage.h"
 
 /*
-#include "pgmError.h"
-#include "pgmClean.h"
-#include "pgmRead.h"
-#include "pgmConvert.h"
-#include "pgmCheck.h"
-*/
+ * macros
+ */
+#define END_FUNC 0
+#define EXIT_NO_ARGS 0
+#define EXIT_WRONG_NO_ARGS 1
 
 
 int main (int argc, char **argv) {
 	/*
-	 * check if no arguments are passed
+	 * handles arguments
+	 */	
+	arguments(argc, argv);
+
+	if (argumentReturnValue == 0)
+		return EXIT_NO_ARGS;
+
+	else if (argumentReturnValue == 1)
+		return EXIT_WRONG_NO_ARGS;
+
+	printf("ok");
+}
+
+
+void arguments (int argc, char **argv) {
+	/*
+	 * checks if no arguments are passed
 	 * return value and prints correct error message
-	 * using pgmError.c and .h
+	 * using pgmArguments.c and .h
 	 */
 	if (argc == 1) {
-		return(noArgumentCount(argv));
+		argumentReturnValue = check_noArguments(argc, argv);
 	}
 
 	/*
@@ -44,14 +60,17 @@ int main (int argc, char **argv) {
 	 * returns value and prints correct error message
 	 * using pgmError.c and .h
 	 */
-	else if (argc != 3) {
-		return(badArgumentCount());
+	else if (argc !=3) {
+		argumentReturnValue = check_badArguments(argc);
 	}
 	
+	/*
+	 * arguments are accepted
+	 * file will be now be read
+	 */
 	else {
-		printf("open file");
+		return;
 	}
-
 }
 
 

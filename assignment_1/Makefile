@@ -14,7 +14,7 @@ CC = gcc
 CCFLAGS = -g -std=c99 -Wall
 
 # Set of subordinate routines
-MODULES = pgmError.o
+MODULES = pgmError.o pgmArgument.o
 
 # Set of main routines
 MAIN= pgmEcho.o
@@ -46,7 +46,8 @@ depend:
 	${CC} ${CCFLAGS} -c -o $*.o $*.c
 
 # program dependencies
-pgmEcho.o: pgmImage.h pgmError.h
+pgmEcho.o: pgmEcho.h pgmImage.h pgmError.h pgmArgument.h
 pgmErrors.o: pgmErrors.h 
+pgmArgument.o: pgmArgument.h
  
  

@@ -7,6 +7,15 @@
 
 
 /*
+ * Collecting constants
+ */
+#define MAX_GREY_VALUE 255
+#define MIN_GREY_VALUE 0
+#define WIDTH 0
+#define HEIGHT 0
+
+
+/*
  * Struct containing values for the pgmImage
  */
 
