@@ -30,6 +30,10 @@
  * Functions for returning error codes
  ************************************/
 
+/*
+ * If a bad file name is given
+ * Returns value and prints string
+ */
 int badFileName(char **argv) {
 	printf("ERROR: Bad File Name (%s)\n", argv[1]);
 	return EXIT_BAD_INPUT_FILE;

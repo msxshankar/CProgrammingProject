@@ -56,6 +56,12 @@ Source and header file that contains functions and structs to reduce files.
 Source and header file that contains functions and structs to tile and assemble files.
 
 
+10. pgmArgument.c and pgmArgument.h
+
+Source and header file that allows for argument checking.
+This will return the correct value and output string.
+
+
 ----------------------------------------------------------- 
  
 Modules used in each program: 
@@ -63,6 +69,7 @@ Modules used in each program:
 I. pgmEcho.c
 
 pgmMacro.h
+pgmArgument.c & pgmArgument.h
 pgmImage.c & pgmImage.h
 pgmError.c & pgmError.h
 pgmClean.c & pgmClean.h
@@ -73,6 +80,7 @@ pgmCheck.c & pgmCheck.h
 II. pgmComp.c
 
 pgmMacro.h
+pgmArgument.c & pgmArgument.h
 pgmImage.c & pgmImage.h
 pgmError.c & pgmError.h
 pgmClean.c & pgmClean.h 
@@ -83,6 +91,7 @@ pgmCheck.c & pgmCheck.h
 III. pgma2b and pgmb2a
 
 pgmMacro.h
+pgmArgument.c & pgmArgument.h
 pgmRead.c & pgmRead.h 
 pgmError.c & pgmError.h
 pgmClean.c & pgmClean.h
@@ -91,6 +100,7 @@ pgmCheck.c & pgmCheck.h
 IV. pgmReduce 
  
 pgmMacro.h
+pgmArgument.c & pgmArgument.h
 pgmImage.c & pgmImage.h
 pgmError.c & pgmError.h
 pgmClean.c & pgmClean.h
@@ -101,6 +111,7 @@ pgmReduceUtility.c & pgmReduceUtility.h
 V. pgmTile
  
 pgmMacro.h
+pgmArgument.c & pgmArgument.h
 pgmImage.c & pgmImage.h
 pgmError.c & pgmError.h
 pgmClean.c & pgmClean.h
@@ -112,6 +123,7 @@ pgmTileUtility.c & pgmTileUtility.h
 VI. pgmAssemble
  
 pgmMacro.h
+pgmArgument.c & pgmArgument.h
 pgmImage.c & pgmImage.h
 pgmError.c & pgmError.h
 pgmClean.c & pgmClean.h

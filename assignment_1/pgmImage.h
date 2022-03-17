@@ -6,6 +6,8 @@
  */
 
 
+#include <stdio.h>
+
 /*
  * Collecting constants
  */
@@ -18,15 +20,14 @@
 /*
  * Struct containing values for the pgmImage
  */
-
-struct pgm_image {
+typedef struct pgmStruct {
 
 	/*
 	 * magic number
 	 * stored as two bytes
 	 */
-	unsigned char magic_number[2];
-	unsigned short *magic_Number;
+	unsigned char magicnumber[2];
+	unsigned short *magicNumber;
 	
 	char *commentLine;
 
@@ -45,4 +46,14 @@ struct pgm_image {
 	 * pointer to raw image data
 	 */
 	unsigned char *imageData;
-};
+} pgmStruct;
+
+
+/*
+ * Function declarations
+ */
+void structInit(pgmStruct *pgmValues);
+void magicNumberRead(pgmStruct *pgmValues, FILE **readFile);
+void commentLine(pgmStruct *pgmValues);
+void imageData (pgmStruct *pgmValues);
+

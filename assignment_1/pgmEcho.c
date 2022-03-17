@@ -27,6 +27,7 @@
 #define END_FUNC 0
 #define EXIT_NO_ARGS 0
 #define EXIT_WRONG_NO_ARGS 1
+#define MAGIC_NUMBER_ASCII_PGM 0x3250
 
 
 int main (int argc, char **argv) {
@@ -69,5 +70,17 @@ int main (int argc, char **argv) {
 		return(badFileName(argv));
 	}
 	
+	/*
+	 * Allocating memory to struct pointer
+	 */
+	pgmStruct *pgmValues = NULL;
+	pgmValues = (pgmStruct *) malloc (sizeof(pgmStruct));
+	structInit(pgmValues);
+	
+	/*
+	 * Reads in magic number
+	 * using pgmImage.c
+	 */
+	magicNumberRead(pgmValues, &inputFile);
 }
 
