@@ -13,8 +13,11 @@
 CC = gcc
 CCFLAGS = -g -std=c99 -Wall
 
+# All routines
+MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o
+
 # Set of subordinate routines
-MODULES = pgmError.o pgmArgument.o pgmImage.o
+PGM_ECHO_MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o
 
 # Set of main routines
 MAIN= pgmEcho.o
@@ -32,8 +35,8 @@ clean:
 
 
 # Links object files for pgmEcho
-pgmEcho: 	pgmEcho.o ${MODULES}
-	${CC} ${CCFLAGS} -o $@ pgmEcho.o ${MODULES}
+pgmEcho: 	pgmEcho.o ${PGM_ECHO_MODULES}
+	${CC} ${CCFLAGS} -o $@ pgmEcho.o ${PGM_ECHO_MODULES}
 
 
 # dependencies
@@ -50,5 +53,6 @@ pgmEcho.o: pgmEcho.h pgmImage.h pgmError.h pgmArgument.h
 pgmErrors.o: pgmErrors.h 
 pgmArgument.o: pgmArgument.h
 pgmImage.o: pgmImage.h
+pgmRead.o: pgmRead.h
  
  

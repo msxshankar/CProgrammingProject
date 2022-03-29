@@ -5,7 +5,9 @@
  * Mayur Shankar
  */
 
-
+/*
+ * Libraries
+ */
 #include <stdio.h>
 
 /*

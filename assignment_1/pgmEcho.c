@@ -20,6 +20,7 @@
 #include "pgmArgument.h"
 #include "pgmError.h"
 #include "pgmImage.h"
+#include "pgmRead.h"
 
 /*
  * macros
@@ -72,15 +73,15 @@ int main (int argc, char **argv) {
 	
 	/*
 	 * Allocating memory to struct pointer
+	 * For storing image data
 	 */
-	pgmStruct *pgmValues = NULL;
-	pgmValues = (pgmStruct *) malloc (sizeof(pgmStruct));
+	pgmStruct *pgmValues = (pgmStruct *) malloc (sizeof(pgmStruct));
 	structInit(pgmValues);
 	
 	/*
 	 * Reads in magic number
-	 * using pgmImage.c
+	 * using pgmRead.c and .h
 	 */
-	magicNumberRead(pgmValues, &inputFile);
+	magicNumberCheck(pgmValues, inputFile, argv);
 }
 
