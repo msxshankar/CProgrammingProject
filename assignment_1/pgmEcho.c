@@ -28,6 +28,7 @@
 #define END_FUNC 0
 #define EXIT_NO_ARGS 0
 #define EXIT_WRONG_NO_ARGS 1
+#define EXIT_BAD_MAGIC_NUMBER 3
 #define MAGIC_NUMBER_ASCII_PGM 0x3250
 
 
@@ -82,6 +83,8 @@ int main (int argc, char **argv) {
 	 * Reads in magic number
 	 * using pgmRead.c and .h
 	 */
-	magicNumberCheck(pgmValues, inputFile, argv);
+	int value = magicNumberCheck(pgmValues, inputFile, argv);
+	if (value == 3)
+		return EXIT_BAD_MAGIC_NUMBER;
 }
 

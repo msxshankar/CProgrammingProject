@@ -6,3 +6,4 @@
  * Defining functions
  */
 int badFileName (char **argv);
+int badMagicNumber (char **argv);

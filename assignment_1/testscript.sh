@@ -3,7 +3,7 @@
 # Mayur Shankar
 
 ###################
-# TEST SCRIPT     #
+#   TEST SCRIPT   #
 ###################
 
 #!/bin/bash
@@ -12,67 +12,151 @@
 make clean
 make all
 
+echo -en "\n"
+
+#################################################
+
+# color coding for clarity
+red='\033[0;31m'
+green='\033[0;32m'
+reset='\033[0m'
+
 #################################################
 
 # no arguments passed
-echo "Testing no arguments passed"
 
-var=$(./pgmEcho)
+noArguments () {
+	echo "Testing no arguments passed"
 
-echo $?
-echo $var
+	var=$(./pgmEcho)
 
-# automate checking outputs
-var=$(./pgmEcho)
+	# Program outputs
+	echo $?
+	echo $var
 
-# if return value equals 0
-test $? -eq 0 && echo "CORRECT return value" || echo "INCORRECT return value"
+	# automate checking outputs
+	var=$(./pgmEcho)
 
-# if output equals required string
-test "$var" = "Usage: ./pgmEcho inputImage.pgm outputImage.pgm" && echo "CORRECT output string" || echo "INCORRECT output string"
+	# if return value equals 0
+	if [ $? -eq 0 ]; then
+	       	echo -e "${green}CORRECT return value${reset}"
+	else
+	       	echo -e "${red}INCORRECT return value${reset}"
+	fi
+
+	# if output equals required string
+	if [ "$var" == "Usage: ./pgmEcho inputImage.pgm outputImage.pgm" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else
+		echo -e "${red}INCORRECT output string${reset}"
+	fi
+	
+	echo -en "\n"
+}
+
 
 #################################################
 
 # incorrect number of arguments
-echo "Testing incorrect number of arguments"
 
-var=$(./pgmEcho inputImage.pgm outputImage.pgm extraImage.pgm)
+wrongNumArguments () {
+	echo "Testing incorrect number of arguments"
 
-echo $?
-echo $var
+	var=$(./pgmEcho inputImage.pgm outputImage.pgm extraImage.pgm)
+	
+	# Program outputs
+	echo $?
+	echo $var
 
-# automate checking outputs
-var=$(./pgmEcho inputImage.pgm outputImage.pgm extraImage.pgm)
-test $? -eq 1 && echo "CORRECT return value" || echo "INCORRECT return value"
-test "$var" = "ERROR: Bad Argument Count" && echo "CORRECT output string" || echo "INCORRECT output string"
+	# automate checking outputs
+	# return value
+	var=$(./pgmEcho inputImage.pgm outputImage.pgm extraImage.pgm)
+
+	if [ $? -eq 1 ]; then
+		echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi
+
+	# String output
+	if [ "$var" == "ERROR: Bad Argument Count" ]; then
+	       	echo -e "${green}CORRECT output string${reset}"
+	else 
+		echo -e "${red}INCORRECT output string${reset}"
+	fi
+
+	echo -en "\n"
+}
 
 #################################################
 
 # bad filename
-echo "Testing bad filename"
+badFilename () {
+	echo "Testing bad filename"
 
-var=$(./pgmEcho one two)
+	var=$(./pgmEcho one two)
 
-echo $?
-echo $var
+	# Program outputs
+	echo $?
+	echo $var
 
-#automate checking outputs
-var=$(./pgmEcho one two)
-test $? -eq 2 && echo "CORRECT return value" || echo "INCORRECT return value"
-test "$var" = "ERROR: Bad File Name (one)" && echo "CORRECT output string" || echo "INCORRECT output string"
+	#automate checking outputs
+	#return value
+	var=$(./pgmEcho one two)
+	
+	if [ $? -eq 2 ]; then
+	       	echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi
 
+	# Testing string output
+	if [ "$var" == "ERROR: Bad File Name (one)" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else
+		echo -e "${red}INCORRECT output string${reset}"
+	fi
+
+	echo -en "\n"
+}
 #################################################
 
 # bad magic number
-echo "Testing bad magic number"
+badMagicNumber () {
+	echo "Testing bad magic number"
 
-var=$(./pgmEcho magic.pgm magic.pgm)
+	var=$(./pgmEcho magic.pgm magic.pgm)
 
-echo $?
-echo $var
+	# Program outputs
+	echo $?
+	echo $var
 
-#automate checking outputs
-var=$(./pgmEcho magic.pgm magic.pgm)
-test $? -eq 2 && echo "CORRECT return value" || echo "INCORRECT return value"
-test "$var" = "ERROR: Bad File Name (magic.pgm)" && echo "CORRECT output string" || echo "INCORRECT output string"
+	#automate checking outputs
+	#return values
+	var=$(./pgmEcho magic.pgm magic.pgm)
 
+	if [ $? -eq 3 ]; then
+		echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi
+
+	# Testing string output
+	if [ "$var" == "ERROR: Bad Magic Number (magic.pgm)" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else 
+		echo -e "${red}INCORRECT output string${reset}"
+
+	fi	
+
+	echo -en "\n"
+}
+
+#################################################
+
+#Runs functions
+
+noArguments
+wrongNumArguments
+badFilename
+badMagicNumber
