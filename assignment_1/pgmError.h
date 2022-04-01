@@ -7,3 +7,4 @@
  */
 int badFileName (char **argv);
 int badMagicNumber (char **argv);
+int badCommentLine (char **argv);

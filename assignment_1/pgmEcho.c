@@ -29,6 +29,7 @@
 #define EXIT_NO_ARGS 0
 #define EXIT_WRONG_NO_ARGS 1
 #define EXIT_BAD_MAGIC_NUMBER 3
+#define EXIT_BAD_COMMENT_LINE 4
 #define MAGIC_NUMBER_ASCII_PGM 0x3250
 
 
@@ -78,7 +79,7 @@ int main (int argc, char **argv) {
 	 */
 	pgmStruct *pgmValues = (pgmStruct *) malloc (sizeof(pgmStruct));
 	structInit(pgmValues);
-	
+
 	/*
 	 * Reads in magic number
 	 * using pgmRead.c and .h
@@ -86,5 +87,18 @@ int main (int argc, char **argv) {
 	int value = magicNumberCheck(pgmValues, inputFile, argv);
 	if (value == 3)
 		return EXIT_BAD_MAGIC_NUMBER;
+	
+	/*
+	 * Reads in comment line
+	 * using pgmRead.c and .h
+	 */
+	value = commentLineCheck(pgmValues, inputFile, argv);
+	if (value == 4)
+		return EXIT_BAD_COMMENT_LINE;
+
+	/*
+	 * Frees struct memory
+	 */
+    	free(pgmValues);
 }
 

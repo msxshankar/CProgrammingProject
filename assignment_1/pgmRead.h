@@ -6,3 +6,4 @@
  * Declaring functions
  */
 int magicNumberCheck();
+int commentLineCheck();

@@ -151,7 +151,38 @@ badMagicNumber () {
 
 	echo -en "\n"
 }
+#################################################
 
+# bad comment line
+badCommentLine () {
+	echo "Testing bad comment line"
+
+	var=$(./pgmEcho comment.pgm comment.pgm)
+
+	# Program outputs
+	echo $?
+	echo $var
+
+	#automate checking outputs
+	#return values
+	var=$(./pgmEcho comment.pgm comment.pgm)
+
+	if [ $? -eq 4 ]; then
+		echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi
+
+	# Testing string output
+	if [ "$var" == "ERROR: Bad Comment Line (comment.pgm)" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else 
+		echo -e "${red}INCORRECT output string${reset}"
+
+	fi	
+
+	echo -en "\n"
+}
 #################################################
 
 #Runs functions
@@ -160,3 +191,4 @@ noArguments
 wrongNumArguments
 badFilename
 badMagicNumber
+badCommentLine

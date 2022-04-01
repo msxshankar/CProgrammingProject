@@ -18,6 +18,7 @@
 #define EXIT_WRONG_ARG_COUNT 1
 #define EXIT_BAD_INPUT_FILE 2
 #define EXIT_BAD_MAGIC_NUMBER 3
+#define EXIT_BAD_COMMENT_LINE 4
 
 #define MAGIC_NUMBER_RAW_PGM 0x3550
 #define MAGIC_NUMBER_ASCII_PGM 0x3250
@@ -43,3 +44,9 @@ int badMagicNumber(char **argv) {
 	printf("ERROR: Bad Magic Number (%s)\n", argv[1]);
 	return EXIT_BAD_MAGIC_NUMBER;
 }
+
+int badCommentLine(char **argv) {
+	printf("ERROR: Bad Comment Line (%s)\n", argv[1]);	
+	return EXIT_BAD_COMMENT_LINE;
+}
+			

@@ -6,6 +6,7 @@
  * Libraries
  */
 #include <stdio.h>
+#include <stdlib.h>
 
 /*
  * Dependencies
@@ -16,6 +17,8 @@
 
 #define READ_SUCCESS 0
 #define MAGIC_NUMBER_ASCII_PGM 0x3250 
+#define MAX_COMMENT_LINE_LENGTH 128
+#define EXIT_BAD_INPUT_FIL
 
 int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/*
@@ -40,3 +43,55 @@ int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		  return READ_SUCCESS;
 	}
  }
+
+int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
+	/* 
+	 * scan whitespace
+	 */
+	int scanCount = fscanf(inputFile, " ");
+
+	/*
+	 * check for a comment line
+	 */
+	char nextChar = fgetc(inputFile);
+
+	if (nextChar == '#') {
+		/* 
+		 * allocate buffer
+		 */
+
+		pgmValues->commentLine = (char *) malloc(MAX_COMMENT_LINE_LENGTH);
+
+		/* 
+		 * fgets() reads a line
+		 */
+		char *commentString = fgets(pgmValues->commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
+
+		if (commentString == NULL) {
+
+			/* 
+			 * free memory
+			 */
+			free(pgmValues->commentLine);
+
+			/* 
+			 * close file
+			 */
+			fclose(inputFile);
+			
+			/*
+			 * Returns error
+			 */
+			return(badCommentLine(argv));
+		}
+	}
+
+	else {
+		/* 
+		 * put character back
+		 */
+		ungetc(nextChar, inputFile);
+	}
+
+	return READ_SUCCESS;
+}
