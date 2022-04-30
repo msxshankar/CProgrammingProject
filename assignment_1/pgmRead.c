@@ -18,8 +18,10 @@
 #define READ_SUCCESS 0
 #define MAGIC_NUMBER_ASCII_PGM 0x3250 
 #define MAX_COMMENT_LINE_LENGTH 128
-#define EXIT_BAD_INPUT_FIL
+#define MIN_IMAGE_DIMENSION 1
+#define MAX_IMAGE_DIMENSION 65536
 
+/* Magic Number Check */
 int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/*
 	 * Reads in magic number
@@ -44,6 +46,8 @@ int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	}
  }
 
+
+/* Comment Line Check */
 int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/* 
 	 * scan whitespace
@@ -59,7 +63,6 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		/* 
 		 * allocate buffer
 		 */
-
 		pgmValues->commentLine = (char *) malloc(MAX_COMMENT_LINE_LENGTH);
 
 		/* 
@@ -68,7 +71,6 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		char *commentString = fgets(pgmValues->commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
 
 		if (commentString == NULL) {
-
 			/* 
 			 * free memory
 			 */
@@ -85,13 +87,38 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 			return(badCommentLine(argv));
 		}
 	}
-
 	else {
 		/* 
 		 * put character back
 		 */
 		ungetc(nextChar, inputFile);
 	}
-
 	return READ_SUCCESS;
+}
+
+/* Dimensions Check */
+int dimensions (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
+
+	/* whitespace to skip blanks             */
+	int scanCount = fscanf(inputFile, " %u %u %u", &(pgmValues->width), &(pgmValues->height), &(pgmValues->maxGray));
+
+	if ((scanCount != 3) || (pgmValues->width < MIN_IMAGE_DIMENSION) ||
+	    (pgmValues->width > MAX_IMAGE_DIMENSION) ||
+	    (pgmValues->height < MIN_IMAGE_DIMENSION) ||
+	    (pgmValues->height > MAX_IMAGE_DIMENSION) ||
+	    (pgmValues->maxGray	!= 255 ))
+		{ /* failed size sanity check    */
+		/* free up the memory            */
+		free(pgmValues->commentLine);
+
+		/* be tidy: close file pointer   */
+		fclose(inputFile);
+
+		/* print an error message */
+		printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
+		
+		/* and return                    */
+		return 5;
+		} /* failed size sanity check    */
+	return 0;
 }

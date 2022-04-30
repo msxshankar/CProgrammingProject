@@ -96,6 +96,8 @@ int main (int argc, char **argv) {
 	if (value == 4)
 		return EXIT_BAD_COMMENT_LINE;
 
+
+
 	/*
 	 * Frees struct memory
 	 */
