@@ -19,6 +19,8 @@
 #define EXIT_BAD_INPUT_FILE 2
 #define EXIT_BAD_MAGIC_NUMBER 3
 #define EXIT_BAD_COMMENT_LINE 4
+#define EXIT_BAD_DIMENSIONS 5
+#define EXIT_BAD_GRAY 6
 
 #define MAGIC_NUMBER_RAW_PGM 0x3550
 #define MAGIC_NUMBER_ASCII_PGM 0x3250
@@ -50,3 +52,12 @@ int badCommentLine(char **argv) {
 	return EXIT_BAD_COMMENT_LINE;
 }
 			
+int badDimensions(char **argv) {
+	printf("ERROR: Bad Dimensions (%s)\n", argv[1]);
+	return EXIT_BAD_DIMENSIONS;
+}
+
+int badGrayValue(char **argv) {
+	printf("ERROR: Bad Max Gray Value (%s)\n", argv[1]);
+	return EXIT_BAD_GRAY;
+}

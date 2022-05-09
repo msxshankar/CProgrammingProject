@@ -185,6 +185,85 @@ badCommentLine () {
 }
 #################################################
 
+# bad dimensions and max gray values
+
+badDimensionsGrayValues () {
+	echo "Testing bad dimensions and max gray value"
+
+	var=$(./pgmEcho dimensions.pgm dimensions.pgm)
+
+	# Program outputs
+	echo $?
+	echo $var
+
+	#automate checking outputs
+	#return values
+	var=$(./pgmEcho dimensions.pgm dimensions.pgm)
+
+	if [ $? -eq 5 ]; then
+		echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi
+
+	# Return values for max gray values
+	var=$(./pgmEcho dimensions.pgm dimensions.pgm)
+
+	if [ $? -eq 6 ]; then
+		echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi
+
+
+	# Testing string output for dimensions
+	if [ "$var" == "ERROR: Bad Dimensions (dimensions.pgm)" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else 
+		echo -e "${red}INCORRECT output string${reset}"
+
+	fi	
+
+	# Testing string output for max gray value
+	if [ "$var" == "ERROR: Bad Max Gray Value (dimensions.pgm)" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else 
+		echo -e "${red}INCORRECT output string${reset}"
+
+	fi
+
+	echo -en "\n"
+}
+
+
+badMalloc () {
+	echo "Testing bad dimensions"
+
+	var=$(./pgmEcho comment.pgm comment.pgm)
+
+	# Program outputs
+	echo $?
+	echo $var
+
+	#automate checking outputs
+	#return values
+	var=$(./pgmEcho comment.pgm comment.pgm)
+
+	if [ $? -eq 6 ]; then
+		echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi
+
+	# Testing string output
+	if [ "$var" == "ERROR: Bad Dimensions (comment.pgm)" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else 
+		echo -e "${red}INCORRECT output string${reset}"
+	fi
+}
+	
+
 #Runs functions
 
 noArguments
@@ -192,3 +271,5 @@ wrongNumArguments
 badFilename
 badMagicNumber
 badCommentLine
+badDimensionsGrayValues
+#badMalloc

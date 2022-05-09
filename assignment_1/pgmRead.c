@@ -19,7 +19,7 @@
 #define MAGIC_NUMBER_ASCII_PGM 0x3250 
 #define MAX_COMMENT_LINE_LENGTH 128
 #define MIN_IMAGE_DIMENSION 1
-#define MAX_IMAGE_DIMENSION 65536
+#define MAX_IMAGE_DIMENSION 65535
 
 /* Magic Number Check */
 int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
@@ -96,17 +96,16 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	return READ_SUCCESS;
 }
 
-/* Dimensions Check */
-int dimensions (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
+/* Dimensions and Max Gray Value Check */
+int dimensionsGrayCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 	/* whitespace to skip blanks             */
 	int scanCount = fscanf(inputFile, " %u %u %u", &(pgmValues->width), &(pgmValues->height), &(pgmValues->maxGray));
-
+	
 	if ((scanCount != 3) || (pgmValues->width < MIN_IMAGE_DIMENSION) ||
 	    (pgmValues->width > MAX_IMAGE_DIMENSION) ||
 	    (pgmValues->height < MIN_IMAGE_DIMENSION) ||
-	    (pgmValues->height > MAX_IMAGE_DIMENSION) ||
-	    (pgmValues->maxGray	!= 255 ))
+	    (pgmValues->height > MAX_IMAGE_DIMENSION))
 		{ /* failed size sanity check    */
 		/* free up the memory            */
 		free(pgmValues->commentLine);
@@ -114,11 +113,22 @@ int dimensions (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		/* be tidy: close file pointer   */
 		fclose(inputFile);
 
-		/* print an error message */
-		printf("Error: Failed to read pgm image from file %s\n", argv[1]);	
-		
-		/* and return                    */
-		return 5;
+		/*
+		 * return
+		 */
+
+		return(badDimensions(argv));
+
 		} /* failed size sanity check    */
-	return 0;
+	
+	if (pgmValues->maxGray !=255) {
+
+		free(pgmValues->commentLine);
+		
+		fclose(inputFile);
+
+		return(badGrayValue(argv));
+	}	
+
+	return READ_SUCCESS;
 }

@@ -7,3 +7,4 @@
  */
 int magicNumberCheck();
 int commentLineCheck();
+int dimensionsGrayCheck();
