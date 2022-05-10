@@ -8,3 +8,5 @@
 int magicNumberCheck();
 int commentLineCheck();
 int dimensionsGrayCheck();
+int mallocCheck();
+int dataCheck();

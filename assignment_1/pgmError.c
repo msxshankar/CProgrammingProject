@@ -48,3 +48,13 @@ int badMalloc(char **argv) {
 	printf("ERROR: Image Malloc Failed");
 	return EXIT_BAD_MALLOC;
 }
+
+int badData(char **argv) {
+	printf("ERROR: Bad Data (%s)\n", argv[1]);
+	return EXIT_BAD_DATA;
+}
+
+int badOutput(char **argv) {
+	printf("ERROR: Output Failed (%s)\n", argv[2]);
+	return EXIT_OUTPUT_FAILED;
+}

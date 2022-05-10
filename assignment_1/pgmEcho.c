@@ -21,6 +21,7 @@
 #include "pgmError.h"
 #include "pgmImage.h"
 #include "pgmRead.h"
+#include "pgmWrite.h"
 #include "pgmCodes.h"
 
 int main (int argc, char **argv) {
@@ -96,6 +97,31 @@ int main (int argc, char **argv) {
 	else if (valueDimensionsGray == 6) {
 		return EXIT_BAD_GRAY;
       	} 
+	
+	int valueMalloc = mallocCheck(pgmValues, inputFile, argv);
+	if (valueMalloc == 7)
+		return EXIT_BAD_MALLOC;
+
+	int valueData = dataCheck(pgmValues, inputFile, argv);
+	if (valueData == 8)
+		return EXIT_BAD_DATA;
+	
+	fclose(inputFile);
+	FILE *outputFile = fopen(argv[2], "w");
+	
+	if (outputFile == NULL) {
+		free(pgmValues->commentLine);
+		free(pgmValues->imageData);
+		return(badOutput(argv));
+	}
+	
+	int valueWrite = writeCheck(pgmValues, outputFile, argv);
+	if (valueWrite == 9)
+		return EXIT_OUTPUT_FAILED;
+	else {
+		printf("ECHOED\n");
+		return EXIT_NO_ERRORS;
+	}
 
 	/*
 	 * Frees struct memory

@@ -185,10 +185,10 @@ badCommentLine () {
 }
 #################################################
 
-# bad dimensions and max gray values
+# bad dimensions
 
-badDimensionsGrayValues () {
-	echo "Testing bad dimensions and max gray value"
+badDimensions() {
+	echo "Testing bad dimensions"
 
 	var=$(./pgmEcho dimensions.pgm dimensions.pgm)
 
@@ -206,40 +206,56 @@ badDimensionsGrayValues () {
 		echo -e "${red}INCORRECT return value${reset}"
 	fi
 
-	# Return values for max gray values
-	var=$(./pgmEcho dimensions.pgm dimensions.pgm)
-
-	if [ $? -eq 6 ]; then
-		echo -e "${green}CORRECT return value${reset}"
-	else
-		echo -e "${red}INCORRECT return value${reset}"
-	fi
-
-
 	# Testing string output for dimensions
 	if [ "$var" == "ERROR: Bad Dimensions (dimensions.pgm)" ]; then
 		echo -e "${green}CORRECT output string${reset}"
 	else 
 		echo -e "${red}INCORRECT output string${reset}"
-
-	fi	
-
-	# Testing string output for max gray value
-	if [ "$var" == "ERROR: Bad Max Gray Value (dimensions.pgm)" ]; then
-		echo -e "${green}CORRECT output string${reset}"
-	else 
-		echo -e "${red}INCORRECT output string${reset}"
-
 	fi
 
 	echo -en "\n"
 }
 
+#################################################
+
+# bad max gray value
+
+badMaxGrayValue () {
+	echo "Testing bad gray value"
+
+	var=$(./pgmEcho gray.pgm gray.pgm)
+
+	# Program outputs
+	echo $?
+	echo $var
+
+	# Return values for max gray values
+	var=$(./pgmEcho gray.pgm gray.pgm)
+
+	if [ $? -eq 6 ]; then
+		echo -e "${green}CORRECT return value${reset}"
+	else
+		echo -e "${red}INCORRECT return value${reset}"
+	fi	
+
+	# Testing string output for max gray value
+	if [ "$var" == "ERROR: Bad Max Gray Value (gray.pgm)" ]; then
+		echo -e "${green}CORRECT output string${reset}"
+	else 
+		echo -e "${red}INCORRECT output string${reset}"
+	fi
+
+	echo -en "\n"
+}
+
+################################################
+
+# bad malloc
 
 badMalloc () {
-	echo "Testing bad dimensions"
+	echo "Testing bad malloc"
 
-	var=$(./pgmEcho comment.pgm comment.pgm)
+	var=$(./pgmEcho malloc.pgm malloc.pgm)
 
 	# Program outputs
 	echo $?
@@ -247,20 +263,22 @@ badMalloc () {
 
 	#automate checking outputs
 	#return values
-	var=$(./pgmEcho comment.pgm comment.pgm)
+	var=$(./pgmEcho malloc.pgm malloc.pgm)
 
-	if [ $? -eq 6 ]; then
+	if [ $? -eq 7 ]; then
 		echo -e "${green}CORRECT return value${reset}"
 	else
 		echo -e "${red}INCORRECT return value${reset}"
 	fi
 
 	# Testing string output
-	if [ "$var" == "ERROR: Bad Dimensions (comment.pgm)" ]; then
+	if [ "$var" == "ERROR: Image Malloc Failed" ]; then
 		echo -e "${green}CORRECT output string${reset}"
 	else 
 		echo -e "${red}INCORRECT output string${reset}"
 	fi
+	
+	echo -en "\n"
 }
 	
 
@@ -271,5 +289,6 @@ wrongNumArguments
 badFilename
 badMagicNumber
 badCommentLine
-badDimensionsGrayValues
-#badMalloc
+badDimensions
+badMaxGrayValue
+badMalloc
