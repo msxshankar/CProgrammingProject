@@ -11,12 +11,7 @@
 
 
 #include "pgmImage.h"
-
-
-/*
- * Macros
- */
-#define MAX_COMMENT_LINE_LENGTH 128
+#include "pgmCodes.h"
 
 /*
  * Initialising struct

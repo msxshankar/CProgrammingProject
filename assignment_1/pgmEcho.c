@@ -21,19 +21,7 @@
 #include "pgmError.h"
 #include "pgmImage.h"
 #include "pgmRead.h"
-
-/*
- * macros
- */
-#define END_FUNC 0
-#define EXIT_NO_ARGS 0
-#define EXIT_WRONG_NO_ARGS 1
-#define EXIT_BAD_MAGIC_NUMBER 3
-#define EXIT_BAD_COMMENT_LINE 4
-#define EXIT_BAD_DIMENSION 5
-#define EXIT_BAD_GRAYVALUE 6
-#define MAGIC_NUMBER_ASCII_PGM 0x3250
-
+#include "pgmCodes.h"
 
 int main (int argc, char **argv) {
 	/*
@@ -103,10 +91,10 @@ int main (int argc, char **argv) {
 	 */
 	int valueDimensionsGray = dimensionsGrayCheck(pgmValues, inputFile, argv); 
 	if (valueDimensionsGray == 5) {
-		return EXIT_BAD_DIMENSION;
+		return EXIT_BAD_DIMENSIONS;
 	}
 	else if (valueDimensionsGray == 6) {
-		return EXIT_BAD_GRAYVALUE;
+		return EXIT_BAD_GRAY;
       	} 
 
 	/*

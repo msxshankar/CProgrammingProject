@@ -3,10 +3,10 @@ List of modules to be implemented:
 
 Modules
 
-1. pgmMacro.h
+1. pgmCodes.h
  
 Header file containing a list of macros for the preprocessor. 
-These macros would include boundary value for pgm files. 
+These macros would include boundary values and error codes for pgm files. 
 This improves modularity as it can be used by all files, reducing repetitive code.
  
  

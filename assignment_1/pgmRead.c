@@ -14,12 +14,7 @@
 #include "pgmRead.h"
 #include "pgmImage.h"
 #include "pgmError.h"
-
-#define READ_SUCCESS 0
-#define MAGIC_NUMBER_ASCII_PGM 0x3250 
-#define MAX_COMMENT_LINE_LENGTH 128
-#define MIN_IMAGE_DIMENSION 1
-#define MAX_IMAGE_DIMENSION 65535
+#include "pgmCodes.h"
 
 /* Magic Number Check */
 int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
@@ -63,12 +58,12 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		/* 
 		 * allocate buffer
 		 */
-		pgmValues->commentLine = (char *) malloc(MAX_COMMENT_LINE_LENGTH);
+		pgmValues->commentLine = (char *) malloc(MAX_COMMENT_LINE_LENGTH + 2);
 
 		/* 
 		 * fgets() reads a line
 		 */
-		char *commentString = fgets(pgmValues->commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
+		char *commentString = fgets(pgmValues->commentLine, MAX_COMMENT_LINE_LENGTH + 2, inputFile);
 
 		if (commentString == NULL) {
 			/* 
@@ -132,3 +127,5 @@ int dimensionsGrayCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 	return READ_SUCCESS;
 }
+
+

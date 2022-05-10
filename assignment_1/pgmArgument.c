@@ -19,15 +19,7 @@
  * pgm header files
  */
 #include "pgmArgument.h"
-
-/*
- * defining return codes
- */
-#define EXIT_NO_ARGS 0
-#define EXIT_WRONG_ARG_COUNT 1
-#define EXIT_NO_ERRORS 0
-#define EXIT_MISC 100
-
+#include "pgmCodes.h"
 
 /*
  * check if no arguments are given

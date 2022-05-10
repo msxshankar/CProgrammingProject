@@ -9,25 +9,7 @@
 #include <stdio.h>
 
 #include "pgmError.h"
-
-
-/*
- * defining exit return values
- */
-#define EXIT_NO_ERRORS 0
-#define EXIT_WRONG_ARG_COUNT 1
-#define EXIT_BAD_INPUT_FILE 2
-#define EXIT_BAD_MAGIC_NUMBER 3
-#define EXIT_BAD_COMMENT_LINE 4
-#define EXIT_BAD_DIMENSIONS 5
-#define EXIT_BAD_GRAY 6
-
-#define MAGIC_NUMBER_RAW_PGM 0x3550
-#define MAGIC_NUMBER_ASCII_PGM 0x3250
-#define MIN_IMAGE_DIMENSION 1
-#define MAX_IMAGE_DIMENSION 65536
-#define MAX_COMMENT_LINE_LENGTH 128
-
+#include "pgmCodes.h"
 
 /*************************************
  * Functions for returning error codes
@@ -60,4 +42,9 @@ int badDimensions(char **argv) {
 int badGrayValue(char **argv) {
 	printf("ERROR: Bad Max Gray Value (%s)\n", argv[1]);
 	return EXIT_BAD_GRAY;
+}
+
+int badMalloc(char **argv) {
+	printf("ERROR: Image Malloc Failed");
+	return EXIT_BAD_MALLOC;
 }
