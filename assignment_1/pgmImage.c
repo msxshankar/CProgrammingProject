@@ -26,26 +26,3 @@ void structInit (pgmStruct *pgmValues) {
 	pgmValues->maxGray= 255;
 	pgmValues->imageData = NULL;
 }
-
-/*
- * Reading in magic number
- */
-void magicNumberRead (pgmStruct *pgmValues, FILE **readFile) {
-	pgmValues->magicnumber[0] = getc(*readFile);
-	pgmValues->magicnumber[1] = getc(*readFile);
-}	
-
-/*
- * Reading in comment line
- */
-void commentLine (pgmStruct *pgmValues) {
-	pgmValues->commentLine = (char *) malloc(MAX_COMMENT_LINE_LENGTH);
-}
-
-/*
- * Reading in image data
- */
-void imageData (pgmStruct *pgmValues) {
-	long nImageBytes = pgmValues->width * pgmValues->height * sizeof(unsigned char);
-	pgmValues->imageData = (unsigned char *) malloc(nImageBytes);
-}
