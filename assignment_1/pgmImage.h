@@ -40,7 +40,7 @@ typedef struct pgmStruct {
 	/*
 	 * pointer to raw image data
 	 */
-	unsigned char *imageData;
+	unsigned char **imageData;
 } pgmStruct;
 
 

@@ -134,7 +134,17 @@ int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 	/* allocate the data pointer             */
 	long nImageBytes = pgmValues->width * pgmValues->height * sizeof(unsigned char);
-	pgmValues->imageData = (unsigned char *) malloc(nImageBytes);
+
+
+	pgmValues->imageData = (unsigned char **) malloc(pgmValues->height * sizeof(unsigned char *));
+	
+	for (int i=0; i < pgmValues->height; i++) {
+		pgmValues->imageData[i] = (unsigned char *) malloc (pgmValues->width * sizeof(unsigned char));
+	}
+	
+	pgmValues->imageData[0][1] = 234;
+	printf("%i", pgmValues->imageData[0][1]);
+
 
 	/* sanity check for memory allocation    */
 	if (pgmValues->imageData == NULL)
