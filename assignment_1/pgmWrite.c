@@ -19,6 +19,7 @@
 #include "pgmWrite.h"
 
 int writeCheck (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
+
 	/* write magic number, size & gray value */
 	size_t nBytesWritten = fprintf(outputFile, "P2\n%d %d\n%d\n", pgmValues->width, pgmValues->height, pgmValues->maxGray);
 
@@ -35,32 +36,29 @@ int writeCheck (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 		} /* dimensional write failed    */
 
 
-	/* pointer for efficient write code      */
+	/*
+	 * Writing from 2D array to file
+	 */
+	
+	for (int i=0; i < pgmValues->height; i++) {
+		for (int j=0; j < pgmValues->width; j++) {
 
-	long nImageBytes = pgmValues->width * pgmValues->height * sizeof(unsigned char);
+			int nextCol = (pgmValues->width - j) - 1;
 
-        for (unsigned char *nextGrayValue = pgmValues->imageData; nextGrayValue < pgmValues->imageData + nImageBytes; nextGrayValue++)
-                { /* per gray value */
+			nBytesWritten = fprintf(outputFile, "%d%c", pgmValues->imageData[i][j], (nextCol ? ' ' : '\n') );
 
-		/* get next char's column        */
-		int nextCol = (nextGrayValue - pgmValues->imageData + 1) % pgmValues->width;
+			if (nBytesWritten < 0)	{
+				/* free memory           */
+				free(pgmValues->commentLine);
+				free(pgmValues->imageData);
 
-		/* write the entry & whitespace  */
-		nBytesWritten = fprintf(outputFile, "%d%c", *nextGrayValue, (nextCol ? ' ' : '\n') );
-
-		/* sanity check on write         */
-		if (nBytesWritten < 0)
-			{ /* data write failed   */
-			/* free memory           */
-			free(pgmValues->commentLine);
-			free(pgmValues->imageData);
-
-			/* return an error code  */
-			return(badOutput(argv));
-
-			} /* data write failed   */
-		} /* per gray value */
+				/* return an error code  */
+				return(badOutput(argv));
+			}
+		}
+	}
 
 	/* at this point, we are done and can exit with a success code */
 	return EXIT_NO_ERRORS;
 }
+        

@@ -132,10 +132,12 @@ int dimensionsGrayCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
-	/* allocate the data pointer             */
-	long nImageBytes = pgmValues->width * pgmValues->height * sizeof(unsigned char);
-	pgmValues->imageData = (unsigned char *) malloc(nImageBytes);
-
+	pgmValues->imageData = (unsigned char **) malloc(pgmValues->height * sizeof(unsigned char *));
+	
+	for (int i=0; i < pgmValues->height; i++) {
+		pgmValues->imageData[i] = (unsigned char *) malloc (pgmValues->width * sizeof(unsigned char));
+	}
+	
 	/* sanity check for memory allocation    */
 	if (pgmValues->imageData == NULL)
 		{ /* malloc failed */
@@ -148,49 +150,67 @@ int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		/* return error code             */
 		return(badMalloc(argv));
 		}
+	
+	/*
+	 * memory allocation check for each row
+	 */
+	for (int i=0; i < pgmValues->height; i++) {
+
+		if (pgmValues->imageData[i] == NULL) {
+
+			free(pgmValues->commentLine);
+
+			fclose(inputFile);
+
+			return(badMalloc(argv));
+		}
+	}
+
 	return READ_SUCCESS;	
 }
 
 int dataCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
-	long nImageBytes = pgmValues->width * pgmValues->height * sizeof(unsigned char);
+	/*
+	 * For loop interating through 2D array
+	 */
+	for (int i=0; i < pgmValues->height; i++) {
+		for (int j=0; j < pgmValues->width; j++) {
 
-	for (unsigned char *nextGrayValue = pgmValues->imageData; nextGrayValue < pgmValues->imageData + nImageBytes; nextGrayValue++)
-		{ /* per gray value */
+			/* read next value               */
+			int grayValue = -1;
+			int scanCount = fscanf(inputFile, " %u", &grayValue);
 
-		/* read next value               */
-		int grayValue = -1;
-		int scanCount = fscanf(inputFile, " %u", &grayValue);
+			/* sanity check	                 */
+			if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255)) {
+				/* free memory           */
+				free(pgmValues->commentLine);
+				free(pgmValues->imageData);	
 
-		/* sanity check	                 */
-		if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255))
-			{ /* fscanf failed */
-			/* free memory           */
-			free(pgmValues->commentLine);
-			free(pgmValues->imageData);	
-
-			/* close file            */
-			fclose(inputFile);
-			
-			return(badData(argv));
+				/* close file            */
+				fclose(inputFile);
+				
+				return(badData(argv));
 			} /* fscanf failed */
-
-		/* set the pixel value           */
-		*nextGrayValue = (unsigned char) grayValue;
-		} /* per gray value */
-
-		int grayValue = -1;
-		int scanCount = fscanf(inputFile, " %u", &grayValue);
-
-		if (scanCount != EOF)
-			{
-			free(pgmValues->commentLine);
-			free(pgmValues->imageData);	
-
-			fclose(inputFile);
 			
-			return(badData(argv));
-			}
+			/*
+			 * Sets pixel value
+			 */
+			pgmValues->imageData[i][j] = grayValue;
+		}
+	}
+
+	int grayValue = -1;
+	int scanCount = fscanf(inputFile, " %u", &grayValue);
+
+	if (scanCount != EOF) {
+		free(pgmValues->commentLine);
+		free(pgmValues->imageData);	
+
+		fclose(inputFile);
+		
+		return(badData(argv));
+	}
 
 	return READ_SUCCESS;
 }
