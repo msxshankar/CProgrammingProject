@@ -150,6 +150,22 @@ int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		/* return error code             */
 		return(badMalloc(argv));
 		}
+	
+	/*
+	 * memory allocation check for each row
+	 */
+	for (int i=0; i < pgmValues->height; i++) {
+
+		if (pgmValues->imageData[i] == NULL) {
+
+			free(pgmValues->commentLine);
+
+			fclose(inputFile);
+
+			return(badMalloc(argv));
+		}
+	}
+
 	return READ_SUCCESS;	
 }
 
