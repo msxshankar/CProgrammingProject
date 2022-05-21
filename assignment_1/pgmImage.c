@@ -1,7 +1,8 @@
 // Programming Project
 
-// Due: 18/03/22
-// Mayur Shankar
+/*
+ * Mayur Shankar
+ */
 
 /*
  * Libraries
@@ -9,7 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/*
+ * Header files
+ */
 #include "pgmImage.h"
 #include "pgmCodes.h"
 

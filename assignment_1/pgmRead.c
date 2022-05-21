@@ -1,6 +1,8 @@
-// Programming Project COMP1921
+// COMP1921 Programming Project
 
-// Mayur Shankar
+/*
+ * Mayur Shankar
+ */
 
 /*
  * Libraries
@@ -10,14 +12,17 @@
 #include <string.h>
 
 /*
- * Dependencies
+ * Header files
  */
 #include "pgmRead.h"
 #include "pgmImage.h"
 #include "pgmError.h"
 #include "pgmCodes.h"
 
-/* Magic Number Check */
+
+/* 
+ * Magic Number Check
+ */
 int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/*
 	 * Reads in magic number
@@ -42,8 +47,9 @@ int magicNumberCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	}
  }
 
-
-/* Comment Line Check */
+/* 
+ * Comment Line Check
+ */
 int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/* 
 	 * scan whitespace
@@ -62,7 +68,7 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		pgmValues->commentLine = (char *) malloc(MAX_COMMENT_LINE_LENGTH);
 
 		/* 
-		 * fgets() reads a line
+		 * fgets() reads in a line
 		 */
 		char *commentString = fgets(pgmValues->commentLine, MAX_COMMENT_LINE_LENGTH, inputFile);
 
@@ -83,85 +89,104 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 			return(badCommentLine(argv));
 		}
 	}
+
 	else {
 		/* 
 		 * put character back
 		 */
 		ungetc(nextChar, inputFile);
 	}
+
 	return READ_SUCCESS;
 }
 
-/* Dimensions and Max Gray Value Check */
+/* 
+ * Dimensions and Max Gray Value Check
+ */
 int dimensionsGrayCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
-	/* whitespace to skip blanks             */
+	/*
+	 * Reads in width, height and gray value
+	 */
 	int scanCount = fscanf(inputFile, " %u %u %u", &(pgmValues->width), &(pgmValues->height), &(pgmValues->maxGray));
 	
+	/*
+	 * Checks whether correct number of values have been read in
+	 * Checks whether these values are correct
+	 */
 	if ((scanCount != 3) || (pgmValues->width < MIN_IMAGE_DIMENSION) ||
 	    (pgmValues->width > MAX_IMAGE_DIMENSION) ||
 	    (pgmValues->height < MIN_IMAGE_DIMENSION) ||
-	    (pgmValues->height > MAX_IMAGE_DIMENSION))
-		{ /* failed size sanity check    */
-		/* free up the memory            */
-		free(pgmValues->commentLine);
+	    (pgmValues->height > MAX_IMAGE_DIMENSION)) {
 
-		/* be tidy: close file pointer   */
+		/* 
+		 * free up the memory and close file pointer
+		 */
+		free(pgmValues->commentLine);
 		fclose(inputFile);
 
 		/*
-		 * return
+		 * return error code
 		 */
-
 		return(badDimensions(argv));
-
-		} /* failed size sanity check    */
+		}
 	
+	/*
+	 * Checks gray value
+	 */	
 	if (pgmValues->maxGray !=255) {
-
-		free(pgmValues->commentLine);
 		
+		/*
+		 * free up memory, close file pointer and return error code
+		 */
+		free(pgmValues->commentLine);
 		fclose(inputFile);
-
 		return(badGrayValue(argv));
 	}	
 
 	return READ_SUCCESS;
 }
 
-
+/*
+ * Malloc check
+ */
 int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
-
+	
+	/*
+	 * Allocates memory to imageData which is the total size of the 2D array
+	 * Then allocates memory to each row in the array
+	 */
 	pgmValues->imageData = (unsigned char **) malloc(pgmValues->height * sizeof(unsigned char *));
 	
 	for (int i=0; i < pgmValues->height; i++) {
 		pgmValues->imageData[i] = (unsigned char *) malloc (pgmValues->width * sizeof(unsigned char));
 	}
 	
-	/* sanity check for memory allocation    */
-	if (pgmValues->imageData == NULL)
-		{ /* malloc failed */
-		/* free up memory                */
+	/* 
+	 * malloc check for entire array
+	 */
+	if (pgmValues->imageData == NULL) {
+
+		/* 
+		 * free up memory, close file pointer and return error code
+		 */
 		free(pgmValues->commentLine);
-
-		/* close file pointer            */
 		fclose(inputFile);
-
-		/* return error code             */
 		return(badMalloc(argv));
-		}
+	}
 	
 	/*
-	 * memory allocation check for each row
+	 * malloc check for each row in array
 	 */
 	for (int i=0; i < pgmValues->height; i++) {
 
 		if (pgmValues->imageData[i] == NULL) {
 
+			/* 
+			 * free up memory, close file pointer and return error code
+			 */
 			free(pgmValues->commentLine);
-
 			fclose(inputFile);
-
 			return(badMalloc(argv));
 		}
 	}
@@ -169,46 +194,63 @@ int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	return READ_SUCCESS;	
 }
 
+
+/* 
+ * data check
+ */
 int dataCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 	/*
-	 * For loop interating through 2D array
+	 * Reads in every pixel of file and writes it to 2D array
 	 */
 	for (int i=0; i < pgmValues->height; i++) {
 		for (int j=0; j < pgmValues->width; j++) {
 
-			/* read next value               */
+			/*
+			 * Reads in next value
+			 */
 			int grayValue = -1;
 			int scanCount = fscanf(inputFile, " %u", &grayValue);
 
-			/* sanity check	                 */
+			/*
+			 * data check
+			 */
 			if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255)) {
-				/* free memory           */
+
+				/* 
+				 * free memory
+				 */
 				free(pgmValues->commentLine);
 				free(pgmValues->imageData);	
 
-				/* close file            */
+				/*
+				 * close file pointer and return error code
+				 */
 				fclose(inputFile);
-				
 				return(badData(argv));
-			} /* fscanf failed */
+			}
 			
 			/*
-			 * Sets pixel value
+			 * Writes pixel value to imageData
 			 */
 			pgmValues->imageData[i][j] = grayValue;
 		}
 	}
 
+	/* 
+	 * Check whether all pixel values have been read in file
+	 */
 	int grayValue = -1;
 	int scanCount = fscanf(inputFile, " %u", &grayValue);
-
+	
 	if (scanCount != EOF) {
+		
+		/*
+		 * free memory, close file pointer and return error code
+		 */
 		free(pgmValues->commentLine);
 		free(pgmValues->imageData);	
-
 		fclose(inputFile);
-		
 		return(badData(argv));
 	}
 

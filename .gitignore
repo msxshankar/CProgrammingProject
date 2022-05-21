@@ -1,4 +1,7 @@
+# Executables
+
 **/*.o
+**/*.out
 **/pgmEcho
 **/pgmComp
 **/pgma2b
@@ -7,5 +10,10 @@
 **/pgmTile
 **/pgmAssemble
 zip.sh
+
+# Files and folders
+
+echoDone.zip
 bugreport.zip
-assignment/.idea
+assignment_1/.idea
+assignment_1/pgmEchoCommented.c

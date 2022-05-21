@@ -1,23 +1,28 @@
 // Programming Project
 
-
 /*
  * Mayur Shankar
  */
 
-
+/*
+ * I/O Library
+ */
 #include <stdio.h>
 
+/*
+ * Header files
+ */
 #include "pgmError.h"
 #include "pgmCodes.h"
 
+
 /*************************************
  * Functions for returning error codes
- ************************************/
+ *************************************/
 
-/*
- * If a bad file name is given
- * Returns value and prints string
+/* Format:
+ * Prints string with filename
+ * Returns correct error code using pgmCodes.h
  */
 int badFileName(char **argv) {
 	printf("ERROR: Bad File Name (%s)\n", argv[1]);

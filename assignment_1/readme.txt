@@ -1,6 +1,6 @@
 Programming Project
 
-Due: 18/09/22
+Due: 25/05/22
 Student: Mayur Shankar
 
 List of commands:
@@ -17,6 +17,6 @@ Run program:
 
 Testing:
 
-./testscript.sh - first builds and runs the program then does tests
+./testscript.sh - first builds and runs the program, then does tests
 
 Prints out the return values and strings as well as confirming whether the tests have passed.

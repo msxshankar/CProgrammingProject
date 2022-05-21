@@ -1,11 +1,11 @@
 # COMP 1921 Programming Project                 
-#
-# Assignement 1
-# 18/03/22
-#  
+
+# Assignement 1 & 2
+# 25/05/22
+  
 # Mayur Shankar  
-#  
-#   
+  
+   
 # Makefile  
 
  
@@ -19,6 +19,7 @@ MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o pgmWrite.o
 # Set of subordinate routines for pgmEcho
 PGM_ECHO_MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o pgmWrite.o
 
+# Set of subordinate routines for pgmComp
 PGM_COMP_MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o pgmWrite.o
 
 # Set of main routines
@@ -54,7 +55,7 @@ depend:
 	${CC} ${CCFLAGS} -c -o $*.o $*.c
 
 # program dependencies
-pgmEcho.o: pgmEcho.h pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
+pgmEcho.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
 pgmComp.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
 pgmErrors.o: pgmErrors.h 
 pgmArgument.o: pgmArgument.h

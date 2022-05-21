@@ -1,7 +1,7 @@
 // COMP 1921 Programming Project
 
 /*
- * Due 18/03/22
+ * Due 25/05/22
  * Mayur Shankar
  */
 
@@ -98,14 +98,26 @@ int main (int argc, char **argv) {
 		return EXIT_BAD_GRAY;
       	} 
 	
+	/*
+	 * Checks for failed malloc
+	 * using pgmRead.c and .h
+	 */	
 	int valueMalloc = mallocCheck(pgmValues, inputFile, argv);
 	if (valueMalloc == 7)
 		return EXIT_BAD_MALLOC;
 
+	/*
+	 * Checks for bad data
+	 * using pgmRead.c and .h	
+	 */
 	int valueData = dataCheck(pgmValues, inputFile, argv);
 	if (valueData == 8)
 		return EXIT_BAD_DATA;
 	
+	/*
+	 * Closes the first file and opens the second file
+	 * Checks whether the file is null
+	 */	
 	fclose(inputFile);
 	FILE *outputFile = fopen(argv[2], "w");
 	
@@ -115,9 +127,15 @@ int main (int argc, char **argv) {
 		return(badOutput(argv));
 	}
 	
+	/*
+	 * Checks for failed output
+	 * using pgmWrite.c and .h
+	 */	
 	int valueWrite = writeCheck(pgmValues, outputFile, argv);
-	if (valueWrite == 9)
+	if (valueWrite == 9) {
 		return EXIT_OUTPUT_FAILED;
+	}
+
 	else {
 		printf("ECHOED\n");
 		return EXIT_NO_ERRORS;

@@ -1,9 +1,12 @@
 // Programming Project
 
 /*
- * Defining error codes and values
+ * Mayur Shankar
  */
 
+/*
+ * Defining error codes
+ */
 #define EXIT_NO_ARGS 0
 #define EXIT_NO_ERRORS 0
 #define EXIT_WRONG_ARG_COUNT 1
@@ -18,6 +21,9 @@
 #define EXIT_BAD_LAYOUT 10
 #define EXIT_MISC 100
 
+/*
+ * Defining boundary values
+ */
 #define MAGIC_NUMBER_RAW_PGM 0x3550
 #define MAGIC_NUMBER_ASCII_PGM 0x3250
 #define MIN_IMAGE_DIMENSION 1

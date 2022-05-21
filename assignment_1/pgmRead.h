@@ -1,6 +1,8 @@
-// Programming project COMP1921
+// COMP1921 Programming project
 
-// Mayur Shankar
+/* 
+ * Mayur Shankar
+ */
 
 /*
  * Declaring functions

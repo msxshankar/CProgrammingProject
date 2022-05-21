@@ -36,7 +36,7 @@ If this is successful, then the struct in pgmImage.h can be updated.
 6. pgmConvert.c and pgmConvert.h
 
 Source and header file that can convert ASCII file to binary and binary file to ASCII.
-It will contain functions that can be used by any program when the conversin is needed. 
+It will contain functions that can be used by any program when the conversion is needed. 
 
  
 7. pgmCheck.c and pgmCheck.h

@@ -1,4 +1,4 @@
-#Programming Project
+# COMP1921 Programming Project
 
 # Mayur Shankar
 
@@ -282,7 +282,7 @@ badMalloc () {
 }
 	
 
-#Runs functions
+# Runs functions
 
 noArguments
 wrongNumArguments

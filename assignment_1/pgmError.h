@@ -1,9 +1,11 @@
 // COMP1921 Programming Project
 
-// Mayur Shankar
+/*
+ * Mayur Shankar
+ */
 
 /*
- * Defining functions
+ * Defining functions for pgmError.c
  */
 int badFileName (char **argv);
 int badMagicNumber (char **argv);
