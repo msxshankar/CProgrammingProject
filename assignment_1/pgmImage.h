@@ -54,7 +54,4 @@ typedef struct pgmStruct {
  * Function declarations
  */
 void structInit(pgmStruct *pgmValues);
-void magicNumberRead(pgmStruct *pgmValues, FILE **readFile);
-void commentLine(pgmStruct *pgmValues);
-void imageData (pgmStruct *pgmValues);
 

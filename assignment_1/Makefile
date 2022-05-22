@@ -56,7 +56,7 @@ depend:
 
 # program dependencies
 pgmEcho.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
-pgmComp.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
+pgmComp.o: pgmComp.h pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
 pgmErrors.o: pgmErrors.h 
 pgmArgument.o: pgmArgument.h
 pgmImage.o: pgmImage.h

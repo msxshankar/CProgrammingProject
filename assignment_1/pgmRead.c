@@ -54,7 +54,7 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/* 
 	 * scan whitespace
 	 */
-	int scanCount = fscanf(inputFile, " ");
+	int scanCountComment = fscanf(inputFile, " ");
 
 	/*
 	 * check for a comment line
@@ -89,7 +89,6 @@ int commentLineCheck(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 			return(badCommentLine(argv));
 		}
 	}
-
 	else {
 		/* 
 		 * put character back
@@ -108,13 +107,13 @@ int dimensionsGrayCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/*
 	 * Reads in width, height and gray value
 	 */
-	int scanCount = fscanf(inputFile, " %u %u %u", &(pgmValues->width), &(pgmValues->height), &(pgmValues->maxGray));
+	int scanCountDimensions = fscanf(inputFile, " %u %u %u", &(pgmValues->width), &(pgmValues->height), &(pgmValues->maxGray));
 	
 	/*
 	 * Checks whether correct number of values have been read in
 	 * Checks whether these values are correct
 	 */
-	if ((scanCount != 3) || (pgmValues->width < MIN_IMAGE_DIMENSION) ||
+	if ((scanCountDimensions != 3) || (pgmValues->width < MIN_IMAGE_DIMENSION) ||
 	    (pgmValues->width > MAX_IMAGE_DIMENSION) ||
 	    (pgmValues->height < MIN_IMAGE_DIMENSION) ||
 	    (pgmValues->height > MAX_IMAGE_DIMENSION)) {
@@ -210,12 +209,12 @@ int dataCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 			 * Reads in next value
 			 */
 			int grayValue = -1;
-			int scanCount = fscanf(inputFile, " %u", &grayValue);
+			int scanCountData = fscanf(inputFile, " %u", &grayValue);
 
 			/*
 			 * data check
 			 */
-			if ((scanCount != 1) || (grayValue < 0) || (grayValue > 255)) {
+			if ((scanCountData != 1) || (grayValue < 0) || (grayValue > 255)) {
 
 				/* 
 				 * free memory
@@ -240,10 +239,10 @@ int dataCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/* 
 	 * Check whether all pixel values have been read in file
 	 */
-	int grayValue = -1;
-	int scanCount = fscanf(inputFile, " %u", &grayValue);
+	int grayValueEOF = -1;
+	int scanCountEOF = fscanf(inputFile, " %u", &grayValueEOF);
 	
-	if (scanCount != EOF) {
+	if (scanCountEOF != EOF) {
 		
 		/*
 		 * free memory, close file pointer and return error code
