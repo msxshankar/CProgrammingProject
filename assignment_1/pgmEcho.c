@@ -27,39 +27,22 @@
 int main (int argc, char **argv) {
 	/*
 	 * handles arguments
+	 * returns value and prints correcct error message
+	 * using pgmArgument.c and .h
 	 */	
 
-	/*
-	 * checks if no arguments are passed
-	 * returns value and prints correct error message
-	 * using pgmArgument.c and .h
-	 */
+	/* checks if no arguments are passed */
 	if (argc == 1) {
 		return(check_noArguments(argc, argv));
 	}
 
-
-	/*
-	 * checks if wrong number of arguments are passed
-	 * returns value and prints correct error message
-	 * using pgmArgument.c and .h
-	 */
+	/* checks if wrong number of arguments are passed */
 	else if (argc != 3) {
 		return(check_badArguments(argc));
 	}
 
-
-	/*
-	 * arguments are accepted
-	 * file will be now be read
-	 */
+	/* first file is opened and checks for NULL */
 	FILE *inputFile = fopen(argv[1], "r");
-	
-	/*
-	 * checks if file is null
-	 * returns value and prints correct error message
-	 * using pgmError.c
-	 */
 	if (inputFile == NULL) {
 		return(badFileName(argv));
 	}
@@ -72,55 +55,25 @@ int main (int argc, char **argv) {
 	structInit(pgmValues);
 
 	/*
-	 * Reads in magic number
+	 * Reads in File
 	 * using pgmRead.c and .h
 	 */
-	int valueMagic = magicNumberCheck(pgmValues, inputFile, argv);
-	if (valueMagic == 3)
-		return EXIT_BAD_MAGIC_NUMBER;
+	int returnValue = read(pgmValues, inputFile, argv);	
 	
-	/*
-	 * Reads in comment line
-	 * using pgmRead.c and .h
-	 */
-	int valueComment = commentLineCheck(pgmValues, inputFile, argv);
-	if (valueComment == 4)
-		return EXIT_BAD_COMMENT_LINE;
-	
-	/* Reads in dimensions and max gray value
-	 * using pgmRead.c and .h
-	 */
-	int valueDimensionsGray = dimensionsGrayCheck(pgmValues, inputFile, argv); 
-	if (valueDimensionsGray == 5) {
-		return EXIT_BAD_DIMENSIONS;
+	/* if the image does not contain P2 or P5 */
+	 if (returnValue != 200) {
+		if (returnValue != 300) {
+			return returnValue;
+		}
 	}
-	else if (valueDimensionsGray == 6) {
-		return EXIT_BAD_GRAY;
-      	} 
-	
-	/*
-	 * Checks for failed malloc
-	 * using pgmRead.c and .h
-	 */	
-	int valueMalloc = mallocCheck(pgmValues, inputFile, argv);
-	if (valueMalloc == 7)
-		return EXIT_BAD_MALLOC;
+
+	/* Closes file */
+	fclose(inputFile);
 
 	/*
-	 * Checks for bad data
-	 * using pgmRead.c and .h	
+	 * Opens second file and checks for NULL
 	 */
-	int valueData = dataCheck(pgmValues, inputFile, argv);
-	if (valueData == 8)
-		return EXIT_BAD_DATA;
-	
-	/*
-	 * Closes the first file and opens the second file
-	 * Checks whether the file is null
-	 */	
-	fclose(inputFile);
 	FILE *outputFile = fopen(argv[2], "w");
-	
 	if (outputFile == NULL) {
 		free(pgmValues->commentLine);
 		free(pgmValues->imageData);
@@ -128,19 +81,10 @@ int main (int argc, char **argv) {
 	}
 	
 	/*
-	 * Checks for failed output
-	 * using pgmWrite.c and .h
-	 */	
-	int valueWrite = writeCheck(pgmValues, outputFile, argv);
-	if (valueWrite == 9) {
-		return EXIT_OUTPUT_FAILED;
-	}
-
-	else {
-		printf("ECHOED\n");
-		return EXIT_NO_ERRORS;
-	}
-
+	 * Writes to file
+	 */ 
+	return(write (pgmValues, outputFile, argv, returnValue));
+		
 	/*
 	 * Frees struct memory
 	 */

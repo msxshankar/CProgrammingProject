@@ -5,10 +5,16 @@
  */
 
 /*
- * Declaring functions
+ * Declaring read function
+ */
+int read();
+
+/*
+ * Declaring functions for each read operation
  */
 int magicNumberCheck();
 int commentLineCheck();
 int dimensionsGrayCheck();
 int mallocCheck();
-int dataCheck();
+int dataCheckASCII();
+int dataCheckBinary();

@@ -38,4 +38,8 @@
 #define WIDTH 0
 #define HEIGHT 0
 
-
+/* 
+ * ASCII and Binary
+ */
+#define READ_ASCII 200
+#define READ_BINARY 300
