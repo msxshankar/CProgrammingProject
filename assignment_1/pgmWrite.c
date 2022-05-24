@@ -56,6 +56,41 @@ int write(pgmStruct *pgmValues, FILE *outputFile, char **argv, int asciiBinary) 
 	return READ_SUCCESS;
 }
 
+
+int writeConvert(pgmStruct *pgmValues, FILE *outputFile, char **argv, int asciiBinary) {
+
+	/* Calls write check for ascii */
+	if (asciiBinary == 200) {
+		int valueWrite = writeCheckBinary(pgmValues, outputFile, argv);
+		if (valueWrite == 9) {
+			return EXIT_OUTPUT_FAILED;
+		}
+
+		/* Write ascii check is successfull */
+		else {
+			printf("CONVERTED\n");
+			return EXIT_NO_ERRORS;
+		}
+	}
+	
+	/* Calls write check for binary */	
+	else if (asciiBinary == 300) {	
+		int valueWriteBin = writeCheckBinary(pgmValues, outputFile, argv);
+		if (valueWriteBin == 9) {
+			return EXIT_OUTPUT_FAILED;
+		}
+
+		/* Write binary check is successfull */
+		else {
+			printf("ECHOED\n");
+			return EXIT_NO_ERRORS;
+		}
+	}
+	return READ_SUCCESS;
+}
+
+
+
 /*
  * Writes ascii data to file
  */
@@ -108,7 +143,7 @@ int writeCheckASCII (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 int writeCheckBinary (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 
 	/* Writes width, height and gray value */
-	size_t nBytesWritten = fprintf(outputFile, "P5\n%d %d\n%d", pgmValues->width, pgmValues->height, pgmValues->maxGray);
+	size_t nBytesWritten = fprintf(outputFile, "P5\n%d %d\n%d\n", pgmValues->width, pgmValues->height, pgmValues->maxGray);
 
 	/* failed write for width, height or gray value */
 	if (nBytesWritten < 0) {

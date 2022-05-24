@@ -8,6 +8,7 @@
  * Declaring write function
  */
 int write();
+int writeConvert();
 
 /*
  * Declaring functions for write operations

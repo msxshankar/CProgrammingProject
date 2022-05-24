@@ -23,12 +23,18 @@
  * Read function
  * Uses functions that are defined below
  */
-int read(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
+int read(pgmStruct *pgmValues, FILE *inputFile, char **argv, int program) {
 	
 	/* Calls magic number check */
 	int valueMagic = magicNumberCheck(pgmValues, inputFile, argv);
 	if (valueMagic == 3) {
 		return EXIT_BAD_MAGIC_NUMBER;	
+	}
+
+	if (program == PGMA2B) {
+		if (valueMagic == READ_BINARY) {
+			return(badMagicNumber(argv));
+		}
 	}
 	
 	/* Calls comment check */
@@ -78,6 +84,7 @@ int read(pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	/* File is read successfully */
 	return READ_SUCCESS;
 }
+
 
 /* 
  * Magic Number Check

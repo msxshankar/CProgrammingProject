@@ -113,7 +113,7 @@ int main (int argc, char **argv) {
 	 * Checks for bad data for first file
 	 * using pgmRead.c and .h	
 	 */
-	int valueDataFile1 = dataCheck(pgmValuesFile1, inputFile1, argv);
+	int valueDataFile1 = dataCheckASCII(pgmValuesFile1, inputFile1, argv);
 	if (valueDataFile1 == 8) {
 		return EXIT_BAD_DATA;
 	}
@@ -182,7 +182,7 @@ int main (int argc, char **argv) {
 	 * Checks for bad data for second file
 	 * using pgmRead.c and .h	
 	 */
-	int valueDataFile2 = dataCheck(pgmValuesFile2, inputFile2, argv);
+	int valueDataFile2 = dataCheckASCII(pgmValuesFile2, inputFile2, argv);
 	if (valueDataFile2 == 8) {
 		return EXIT_BAD_DATA;
 	}

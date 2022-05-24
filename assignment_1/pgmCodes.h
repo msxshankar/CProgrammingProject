@@ -43,3 +43,8 @@
  */
 #define READ_ASCII 200
 #define READ_BINARY 300
+
+/* Program Names */
+#define PGMA2B 20
+
+
