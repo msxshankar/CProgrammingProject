@@ -5,6 +5,12 @@
  */
 
 /*
- * Declaring functions
+ * Declaring write function
  */
-int writeCheck();
+int write();
+
+/*
+ * Declaring functions for write operations
+ */
+int writeCheckASCII();
+int writeCheckBinary();

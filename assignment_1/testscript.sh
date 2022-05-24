@@ -292,3 +292,5 @@ badCommentLine
 badDimensions
 badMaxGrayValue
 badMalloc
+
+diff <(xxd pepper.pgm) <(xxd var)
