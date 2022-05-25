@@ -38,7 +38,6 @@ int main (int argc, char **argv) {
 		return(check_noArguments(argc, argv));
 	}
 
-
 	/*
 	 * checks if wrong number of arguments are passed
 	 * returns value and prints correct error message
@@ -47,7 +46,6 @@ int main (int argc, char **argv) {
 	else if (argc != 3) {
 		return(check_badArguments(argc));
 	}
-
 
 	/*
 	 * arguments are accepted
@@ -70,8 +68,11 @@ int main (int argc, char **argv) {
 	 */
 	pgmStruct *pgmValuesFile1 = (pgmStruct *) malloc (sizeof(pgmStruct));
 	structInit(pgmValuesFile1);
-
+	
+	/* Reads in file*/
 	int file1Read = read(pgmValuesFile1, inputFile1, argv);
+
+	/* Checks what value is returned and returns if an error has occurred */
 	if (file1Read != 0) {
 		if (file1Read != 200) {
 			if (file1Read != 300) {
@@ -85,7 +86,8 @@ int main (int argc, char **argv) {
 
 	/* opens second file and checks if it equals null */
 	FILE *inputFile2 = fopen(argv[2], "r");
-
+	
+	/* Checks second input file */
 	if (inputFile2 == NULL) {
 		return(badFileName(argv));
 	}
@@ -97,6 +99,7 @@ int main (int argc, char **argv) {
 	pgmStruct *pgmValuesFile2 = (pgmStruct *) malloc (sizeof(pgmStruct));
 	structInit(pgmValuesFile2);
 
+	/* Reads second file in and checks return values */	
 	int file2Read = read(pgmValuesFile2, inputFile2, argv);
 	if (file2Read != 0) {
 		if (file2Read != 200) {
@@ -108,33 +111,40 @@ int main (int argc, char **argv) {
 	
 	/* Closes second file */
 	fclose(inputFile2);
-
+	
+	/* Compares files */
 	int final = compare(pgmValuesFile1, pgmValuesFile2);
 	return final;
 }
 
+/* Compare function */
 int compare (pgmStruct *pgmValuesFile1, pgmStruct *pgmValuesFile2) {
-	
+
+	/* Checks comment line difference */
 	if (pgmValuesFile1->commentLine != pgmValuesFile2->commentLine) {
 		printf("DIFFERENT\n");
 		return READ_SUCCESS;	
 	}
-	
+
+	/* Checks width difference */	
 	if (pgmValuesFile1->width != pgmValuesFile2->width) {
 		printf("DIFFERENT\n");
 		return READ_SUCCESS;
 	}
-
+	
+	/* Checks height difference */
 	if (pgmValuesFile1->height != pgmValuesFile2->height) {
 		printf("DIFFERENT\n");
 		return READ_SUCCESS;
 	}
-
+	
+	/* Checks max gray value difference */
 	if (pgmValuesFile1->maxGray != pgmValuesFile2->maxGray) {
 		printf("DIFFERENT\n");
 		return READ_SUCCESS;
 	}
-
+	
+	/* Checks image data difference */
 	for (int i=0; i < pgmValuesFile1->height; i++) {
        		for (int j=0; j < pgmValuesFile1->width; j++) {
 			
@@ -145,6 +155,7 @@ int compare (pgmStruct *pgmValuesFile1, pgmStruct *pgmValuesFile2) {
 		}
 	}
 	
+	/* Files are identical */	
 	printf("IDENTICAL\n");
 	return READ_SUCCESS;
 }

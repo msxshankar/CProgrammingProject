@@ -30,33 +30,28 @@ This can be used as a cleanup program when an error occurs.
 5. pgmRead.c and pgmRead.h
 
 Source and header file that can read in files and do error checking (using pgmError.h).
+Should be able to read in both binary and ASCII files.
 If this is successful, then the struct in pgmImage.h can be updated. 
  
- 
-6. pgmConvert.c and pgmConvert.h
 
-Source and header file that can convert ASCII file to binary and binary file to ASCII.
-It will contain functions that can be used by any program when the conversion is needed. 
-
- 
-7. pgmCheck.c and pgmCheck.h
+6. pgmCheck.c and pgmCheck.h
 
 Source and header file that checks that the outputted file has been written to correctly.
 After the new file has been written to, a pgmCheck function can be called.
 It can use pgmError.h and pgmClean.c/.h as part of this check function
  
  
-8. pgmReduceUtility.c and pgmReduceUtility.h 
+7. pgmReduceUtility.c and pgmReduceUtility.h 
  
 Source and header file that contains functions and structs to reduce files. 
  
  
-9. pgmTileUtility.c and pgmTileUtility.h
+8. pgmTileUtility.c and pgmTileUtility.h
 
 Source and header file that contains functions and structs to tile and assemble files.
 
 
-10. pgmArgument.c and pgmArgument.h
+9. pgmArgument.c and pgmArgument.h
 
 Source and header file that allows for argument checking.
 This will return the correct value and output string.

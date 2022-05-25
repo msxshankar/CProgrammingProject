@@ -125,7 +125,11 @@ int writeCheckASCII (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 				 * free memory and return error code
 				 */
 				free(pgmValues->commentLine);
+				for (int i=0; i < pgmValues->height; i++) {
+					free(pgmValues->imageData[i]);
+				}
 				free(pgmValues->imageData);
+
 				return(badOutput(argv));
 			}
 		}
@@ -150,6 +154,9 @@ int writeCheckBinary (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 
 		/* free memory and return error code */
 		free(pgmValues->commentLine);
+		for (int i=0; i < pgmValues->height; i++) {
+			free(pgmValues->imageData[i]);
+		}
 		free(pgmValues->imageData);
 		return(badOutput(argv));
 	}
@@ -166,7 +173,11 @@ int writeCheckBinary (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 			if (nBytesWritten < 0)	{
 				/* free memory and return error code */
 				free(pgmValues->commentLine);
+				for (int i=0; i < pgmValues->height; i++) {
+					free(pgmValues->imageData[i]);
+				}
 				free(pgmValues->imageData);
+
 				return(badOutput(argv));
 			}
 		}

@@ -30,19 +30,20 @@ int read(pgmStruct *pgmValues, FILE *inputFile, char **argv, int program) {
 	if (valueMagic == 3) {
 		return EXIT_BAD_MAGIC_NUMBER;	
 	}
-
+	
+	/* If the program is pgma2b, binary values won't be accepted */
 	if (program == PGMA2B) {
 		if (valueMagic == READ_BINARY) {
 			return(badMagicNumber(argv));
 		}
 	}
 	
+	/* If the program is pgmb2a, ascii values won't be accepted */
 	else if (program == PGMB2A) {
 		if (valueMagic == READ_ASCII) {
 			return(badMagicNumber(argv));
 		}
 	}
-	
 	
 	/* Calls comment check */
 	int valueComment = commentLineCheck (pgmValues, inputFile, argv);
@@ -66,7 +67,7 @@ int read(pgmStruct *pgmValues, FILE *inputFile, char **argv, int program) {
 		return EXIT_BAD_MALLOC;
 	}
 	
-	/* Calls data check for ascii */
+	/* Calls data check for ascii depending on magic number */
 	if (valueMagic == 200) {
 		int valueData = dataCheckASCII (pgmValues, inputFile, argv); 
 		if (valueData == 8) {
@@ -77,7 +78,7 @@ int read(pgmStruct *pgmValues, FILE *inputFile, char **argv, int program) {
 		}
 	}
 	
-	/* Calls data check for binary */	
+	/* Calls data check for binary depending on magic number*/	
 	else if (valueMagic == 300) {
 		int valueDataBin = dataCheckBinary(pgmValues, inputFile, argv);
 		if (valueDataBin == 8) {
@@ -211,6 +212,11 @@ int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 		/* free up memory, close file pointer and return error code */
 		free(pgmValues->commentLine);
+		for (int i=0; i < pgmValues->height; i++) {
+			free(pgmValues->imageData[i]);
+		}
+		free(pgmValues->imageData);
+
 		fclose(inputFile);
 		return(badMalloc(argv));
 	}
@@ -222,6 +228,11 @@ int mallocCheck (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 			/* free up memory, close file pointer and return error code */
 			free(pgmValues->commentLine);
+			for (int i=0; i < pgmValues->height; i++) {
+				free(pgmValues->imageData[i]);
+			}
+			free(pgmValues->imageData);
+
 			fclose(inputFile);
 			return(badMalloc(argv));
 		}
@@ -249,7 +260,11 @@ int dataCheckASCII (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 				/* free memory, close file pointer and return error code */
 				free(pgmValues->commentLine);
+				for (int i=0; i < pgmValues->height; i++) {
+					free(pgmValues->imageData[i]);
+				}
 				free(pgmValues->imageData);	
+
 				fclose(inputFile);
 				return(badData(argv));
 			}
@@ -267,7 +282,11 @@ int dataCheckASCII (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		
 		/* free memory, close file pointer and return error code */
 		free(pgmValues->commentLine);
+		for (int i=0; i < pgmValues->height; i++) {
+			free(pgmValues->imageData[i]);
+		}
 		free(pgmValues->imageData);	
+
 		fclose(inputFile);
 		return(badData(argv));
 	}
@@ -281,23 +300,26 @@ int dataCheckASCII (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 int dataCheckBinary (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	
 	unsigned char grayValueBin;
-
+	
+	/* Moves file pointer by 1 byte to skip newline */
 	fseek(inputFile, 1, SEEK_CUR);
 
 	/* Reads in every pixel of file and writes it to 2D array */
 	for (int i=0; i < pgmValues->height; i++) {
 		for (int j=0; j < pgmValues->width; j++) {
-			
+		
+			/* Reads in data*/	
 			int scanCountDataBin = fread(&grayValueBin, sizeof(unsigned char), 1, inputFile);
-	//		printf("%i\n", scanCountDataBin);
-			//printf("%u\n", grayValueBin);
 
-			//if ((scanCountDataBin != 1) || (grayValueBin < -257) || (grayValueBin > 255)) {
 			if (scanCountDataBin != 1) {
 
 				/* free memory, close file pointer and return error code */
 				free(pgmValues->commentLine);
+				for (int i=0; i < pgmValues->height; i++) {
+					free(pgmValues->imageData[i]);
+				}
 				free(pgmValues->imageData);	
+
 				fclose(inputFile);
 				return(badData(argv));
 			}
@@ -308,17 +330,17 @@ int dataCheckBinary (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	}
 
 	/* Check whether all pixel values have been read in file */
-	int grayValue = -1;
 	int scanCountEOF = fgetc(inputFile);
-//  	int scanCount = fscanf(inputFile, " %u", &grayValue);
-	//int scanCountEOF = fread(&grayValue, sizeof(unsigned char), 1, inputFile);
-//	printf("%i", scanCountEOF);
 	
 	if (scanCountEOF != EOF) {
 
 		/* free memory, close file pointer and return error code */
 		free(pgmValues->commentLine);
+		for (int i=0; i < pgmValues->height; i++) {
+					free(pgmValues->imageData[i]);
+		}
 		free(pgmValues->imageData);	
+
 		fclose(inputFile);
 		return(badData(argv));
 	}
