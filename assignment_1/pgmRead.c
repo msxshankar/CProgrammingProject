@@ -337,7 +337,7 @@ int dataCheckBinary (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 		/* free memory, close file pointer and return error code */
 		free(pgmValues->commentLine);
 		for (int i=0; i < pgmValues->height; i++) {
-					free(pgmValues->imageData[i]);
+			free(pgmValues->imageData[i]);
 		}
 		free(pgmValues->imageData);	
 

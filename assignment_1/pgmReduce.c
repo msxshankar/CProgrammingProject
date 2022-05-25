@@ -52,6 +52,8 @@ int main (int argc, char **argv) {
 	 * using pgmRead.c and .h
 	 */
 	int reduceReadValue = read(pgmValues, inputFile, argv);	
+	
+	/* Checks return values and returns if an error has occurred */
 	if (reduceReadValue != 0) {
 		if (reduceReadValue != 200) {
 			if (reduceReadValue != 300) {

@@ -56,7 +56,7 @@ int write(pgmStruct *pgmValues, FILE *outputFile, char **argv, int asciiBinary) 
 	return READ_SUCCESS;
 }
 
-
+/* Writes to binary if ascii was read in and vice versa */
 int writeConvert(pgmStruct *pgmValues, FILE *outputFile, char **argv, int asciiBinary) {
 
 	/* Calls write check for ascii */
@@ -88,7 +88,6 @@ int writeConvert(pgmStruct *pgmValues, FILE *outputFile, char **argv, int asciiB
 	}
 	return READ_SUCCESS;
 }
-
 
 
 /*
@@ -154,9 +153,6 @@ int writeCheckBinary (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 
 		/* free memory and return error code */
 		free(pgmValues->commentLine);
-		for (int i=0; i < pgmValues->height; i++) {
-			free(pgmValues->imageData[i]);
-		}
 		free(pgmValues->imageData);
 		return(badOutput(argv));
 	}
@@ -166,7 +162,6 @@ int writeCheckBinary (pgmStruct *pgmValues, FILE *outputFile, char **argv) {
 		for (int j=0; j < pgmValues->width; j++) {
 
 			/* Writes imageData */
-//			printf("%u\n", pgmValues->imageData[511][511]);
 			nBytesWritten = fwrite(&pgmValues->imageData[i][j], sizeof(unsigned char), 1, outputFile);
 
 			/* failed imageData write */
