@@ -1,27 +1,21 @@
-// COMP 1921 Programming Project
+/* COMP1921 Programming Project */
 
 /*
- * Due 25/05/22
  * Mayur Shankar
  */
 
-
-/*
- * I/O and memory libraries
- */
+/* Libraries */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-
-/* 
- * pgm header files
- */
+/* Dependencies */
 #include "pgmArgument.h"
+#include "pgmCodes.h"
 #include "pgmError.h"
 #include "pgmImage.h"
 #include "pgmRead.h"
 #include "pgmWrite.h"
-#include "pgmCodes.h"
 
 int main (int argc, char **argv) {
 	/*
@@ -36,10 +30,10 @@ int main (int argc, char **argv) {
 	}
 
 	/* checks if wrong number of arguments are passed */
-	else if (argc != 3) {
+	else if (argc != 4) {
 		return(check_badArguments(argc));
 	}
-
+	
 	/* first file is opened and checks for NULL */
 	FILE *inputFile = fopen(argv[1], "r");
 	if (inputFile == NULL) {
@@ -57,36 +51,14 @@ int main (int argc, char **argv) {
 	 * Reads in File
 	 * using pgmRead.c and .h
 	 */
-	int returnValue = read(pgmValues, inputFile, argv);	
-	
-	/* if the image does not contain P2 or P5 */
-	 if (returnValue != 200) {
-		if (returnValue != 300) {
-			return returnValue;
+	int reduceReadValue = read(pgmValues, inputFile, argv);	
+	if (reduceReadValue != 0) {
+		if (reduceReadValue != 200) {
+			if (reduceReadValue != 300) {
+				return reduceReadValue;
+			}
 		}
 	}
-
-	/* Closes file */
-	fclose(inputFile);
-
-	/*
-	 * Opens second file and checks for NULL
-	 */
-	FILE *outputFile = fopen(argv[2], "w");
-	if (outputFile == NULL) {
-		free(pgmValues->commentLine);
-		free(pgmValues->imageData);
-		return(badOutput(argv));
-	}
 	
-	/*
-	 * Writes to file
-	 */ 
-	return(write (pgmValues, outputFile, argv, returnValue));
-		
-	/*
-	 * Frees struct memory
-	 */
-    	free(pgmValues);
-}
-
+	return READ_SUCCESS;
+}	

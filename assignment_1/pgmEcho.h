@@ -1,4 +1,0 @@
-// Programming project
-
-// Mayur Shankar
-

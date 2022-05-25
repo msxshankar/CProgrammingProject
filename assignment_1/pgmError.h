@@ -15,3 +15,4 @@ int badGrayValue (char **argv);
 int badMalloc (char **argv);
 int badData (char **argv);
 int badOutput (char **argv);
+int miscError (char **argv);

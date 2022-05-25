@@ -28,11 +28,14 @@ PGM_A2B_MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o pgmWrite.o
 # Set of subordinate routines for pgmb2a
 PGM_B2A_MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o pgmWrite.o
 
+# Set of subordinate rountines for pgmReduce
+PGM_REDUCE_MODULES = pgmError.o pgmArgument.o pgmImage.o pgmRead.o pgmWrite.o
+
 # Set of main routines
-MAIN= pgmEcho.o pgmComp.o pgma2b.o pgmb2a.o
+MAIN= pgmEcho.o pgmComp.o pgma2b.o pgmb2a.o pgmReduce.o
 
 # Set of executables
-TARGETS = pgmEcho pgmComp pgma2b pgmb2a
+TARGETS = pgmEcho pgmComp pgma2b pgmb2a pgmReduce
  
 
 # Compiles all files 
@@ -59,6 +62,11 @@ pgma2b:     	pgma2b.o ${PGM_A2B_MODULES}
 pgmb2a:     	pgmb2a.o ${PGM_B2A_MODULES}
 	${CC} ${CCFLAGS} -o $@ pgmb2a.o ${PGM_B2A_MODULES}
 
+# Links object files for pgmReduce
+pgmReduce:     	pgmReduce.o ${PGM_REDUCE_MODULES}
+	${CC} ${CCFLAGS} -o $@ pgmReduce.o ${PGM_REDUCE_MODULES}
+
+
 # dependencies
 depend: 
 	makedepend -Y *.c
@@ -73,6 +81,7 @@ pgmEcho.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
 pgmComp.o: pgmComp.h pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
 pgma2b.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
 pgmb2a.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
+pgmReduce.o: pgmImage.h pgmError.h pgmArgument.h pgmRead.h pgmWrite.h
 pgmErrors.o: pgmErrors.h 
 pgmArgument.o: pgmArgument.h
 pgmImage.o: pgmImage.h

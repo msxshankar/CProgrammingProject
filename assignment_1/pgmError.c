@@ -63,3 +63,8 @@ int badOutput(char **argv) {
 	printf("ERROR: Output Failed (%s)\n", argv[2]);
 	return EXIT_OUTPUT_FAILED;
 }
+
+int miscError(char **argv) {
+	printf("ERROR: Miscellaneous\n");
+	return EXIT_MISC;
+}
