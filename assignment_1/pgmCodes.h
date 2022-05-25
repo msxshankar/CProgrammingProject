@@ -46,5 +46,6 @@
 
 /* Program Names */
 #define PGMA2B 20
+#define PGMB2A 21
 
 

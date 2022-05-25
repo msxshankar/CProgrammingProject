@@ -37,6 +37,13 @@ int read(pgmStruct *pgmValues, FILE *inputFile, char **argv, int program) {
 		}
 	}
 	
+	else if (program == PGMB2A) {
+		if (valueMagic == READ_ASCII) {
+			return(badMagicNumber(argv));
+		}
+	}
+	
+	
 	/* Calls comment check */
 	int valueComment = commentLineCheck (pgmValues, inputFile, argv);
 	if (valueComment == 4) {
@@ -273,9 +280,9 @@ int dataCheckASCII (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
  */
 int dataCheckBinary (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 	
-//	unsigned char *dataString = (unsigned char *) malloc(pgmValues->width * pgmValues->height * sizeof(unsigned char));
+	unsigned char grayValueBin;
 
-	int grayValueBin = -1;
+	fseek(inputFile, 1, SEEK_CUR);
 
 	/* Reads in every pixel of file and writes it to 2D array */
 	for (int i=0; i < pgmValues->height; i++) {
@@ -283,7 +290,7 @@ int dataCheckBinary (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 			
 			int scanCountDataBin = fread(&grayValueBin, sizeof(unsigned char), 1, inputFile);
 	//		printf("%i\n", scanCountDataBin);
-	//		printf("%i\n", grayValueBin);
+			//printf("%u\n", grayValueBin);
 
 			//if ((scanCountDataBin != 1) || (grayValueBin < -257) || (grayValueBin > 255)) {
 			if (scanCountDataBin != 1) {
@@ -302,11 +309,12 @@ int dataCheckBinary (pgmStruct *pgmValues, FILE *inputFile, char **argv) {
 
 	/* Check whether all pixel values have been read in file */
 	int grayValue = -1;
+	int scanCountEOF = fgetc(inputFile);
 //  	int scanCount = fscanf(inputFile, " %u", &grayValue);
-	int scanCountEOF = fread(&grayValue, sizeof(unsigned char), 1, inputFile);
+	//int scanCountEOF = fread(&grayValue, sizeof(unsigned char), 1, inputFile);
 //	printf("%i", scanCountEOF);
 	
-	if (scanCountEOF != 1) {
+	if (scanCountEOF != EOF) {
 
 		/* free memory, close file pointer and return error code */
 		free(pgmValues->commentLine);

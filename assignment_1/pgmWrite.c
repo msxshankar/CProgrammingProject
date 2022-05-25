@@ -75,14 +75,14 @@ int writeConvert(pgmStruct *pgmValues, FILE *outputFile, char **argv, int asciiB
 	
 	/* Calls write check for binary */	
 	else if (asciiBinary == 300) {	
-		int valueWriteBin = writeCheckBinary(pgmValues, outputFile, argv);
+		int valueWriteBin = writeCheckASCII(pgmValues, outputFile, argv);
 		if (valueWriteBin == 9) {
 			return EXIT_OUTPUT_FAILED;
 		}
 
 		/* Write binary check is successfull */
 		else {
-			printf("ECHOED\n");
+			printf("CONVERTED\n");
 			return EXIT_NO_ERRORS;
 		}
 	}
